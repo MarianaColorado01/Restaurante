@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/input.css">
+    <link rel="canonical" href="https://https://demo.themesberg.com/landwind/" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milonga</title>
+    <!-- Meta SEO -->
+    <meta name="title" content="Landwind - Tailwind CSS Landing Page">
+    <meta name="description"
+        content="Get started with a free and open-source landing page built with Tailwind CSS and the Flowbite component library.">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="author" content="Themesberg">
+    <!-- Social media share -->
+    <meta property="og:title" content=milonga_restaurant - Tailwind CSS Landing Page>
+    <meta property="og:site_name" content=Themesberg>
+    <meta property="og:url" content=https://https://demo.themesberg.com/landwind />
+    <meta property="og:description" content=Get started with a free and open-source landing page for Tailwind CSS built
+        with the Flowbite component library featuring dark mode, hero sections, pricing cards, and more.>
+    <meta property="og:type" content="">
+    <meta property="og:image" content=https://themesberg.s3.us-east-2.amazonaws.com/public/github/landwind/og-image.png>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@themesberg" />
+    <meta name="twitter:creator" content="@themesberg" />
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static//images/favicon-16x16.png">
+    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="../.vscode/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link href="../static/css/output.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Login para Restaurante">
+    <meta name="author" content="Juan J.">
+    <meta name="keywords" content="login, registro, restaurante, sistema">
+    
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100" class="bg-gray-50">
+    <!-- Mostrar alertas -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div id="popup-alert" class="fixed inset-0 hidden items-center justify-center bg-opacity-50 z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-80 relative">
+            <button id="close-popup" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">&times;</button>
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+    
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- Página de inicio -->
+    {% if form_type == 'index' %}
+    <div class="text-center bg-white p-8 rounded-xl shadow-lg max-w-sm">
+        <h1 class="text-3xl font-bold mb-6 text-black">¡Bienvenido!</h1>
+        <div class="space-x-4">
+            <a href="{{ url_for('login') }}"
+                class="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md bg-stone-800 hover:bg-stone-700 border-stone-900 text-stone-50 rounded-full transition antialiased">Iniciar
+                Sesión</a>
+            <a href="{{ url_for('register') }}"
+                class="inline-flex items-center justify-center border align-middle select-none font-sans font-medium text-center duration-300 ease-in disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed focus:shadow-none text-sm py-2 px-4 shadow-sm hover:shadow-md bg-stone-800 hover:bg-stone-700 border-stone-900 text-stone-50 rounded-full transition antialiased">Registrarse</a>
+        </div>
+    </div>
+    <!-- Formulario de registro -->
+    {% elif form_type == 'register' %}
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
+        <h1 class="text-3xl font-bold text-center text-gray-900">Registro</h1>
+        <p class="text-center text-gray-500 mb-6">Enter your email and password</p>
+        <button
+            class="flex items-center justify-center w-full py-2 px-4 bg-white border rounded-lg shadow-sm text-gray-600 hover:bg-gray-100">
+            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" class="w-5 h-5 mr-2"> Sign in
+            with Google
+        </button>
+        <div class="flex items-center my-4">
+            <hr class="flex-grow border-gray-300">
+            <span class="mx-2 text-gray-400">or</span>
+            <hr class="flex-grow border-gray-300">
+        </div>
+        <form method="POST">
+            <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre:</label>
+            <input type="text" id="nombre" name="nombre"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="nombre" required>
+            <label for="apellido" class="block text-sm font-medium text-gray-700">Apellido:</label>
+            <input type="text" id="apellido" name="apellido"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="apellido" required>
+            <label for="correo" class="block text-sm font-medium text-gray-700">Correo:</label>
+            <input type="email" id="correo" name="correo"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="mail@loopple.com" required>
+            <label for="contraseña" class="block text-sm font-medium text-gray-700">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="contraseña" required>
+            <button class="mt-6 w-full py-2 px-4 bg-gray-500 text-white font-bold rounded-lg hover:bg-gray-700"
+                type="submit">Registrarse</button>
+        </form>
+        <div class="links">
+            <p class="text-center text-gray-600 text-sm mt-4">¿Ya tienes una cuenta?</p><a href="{{ url_for('login') }}"
+                class="text-center text-gray-600 text-sm mt-4">
+                Inicia sesión</a>
+        </div>
+    </div>
+    <!-- Formulario de inicio de sesión -->
+    {% elif form_type == 'login' %}
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg">
+        <h1 class="text-3xl font-bold text-center text-gray-900">Iniciar Sesión</h1>
+        <p class="text-center text-gray-500 mb-6">Enter your email and password</p>
+        <button
+            class="flex items-center justify-center w-full py-2 px-4 bg-white border rounded-lg shadow-sm text-gray-600 hover:bg-gray-100">
+            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" class="w-5 h-5 mr-2"> Sign in
+            with Google
+        </button>
+        <div class="flex items-center my-4">
+            <hr class="flex-grow border-gray-300">
+            <span class="mx-2 text-gray-400">or</span>
+            <hr class="flex-grow border-gray-300">
+        </div>
+        <form method="POST">
+            <label for="correo" class="block text-sm font-medium text-gray-700">Correo:</label>
+            <input type="email" id="correo" name="correo"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="mail@loopple.com" required>
+            <label for="contraseña" class="block text-sm font-medium text-gray-700">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="" required>
+            <button class="mt-6 w-full py-2 px-4 bg-gray-500 text-white font-bold rounded-lg hover:bg-gray-700"
+                type="submit">Iniciar Sesión</button>
+        </form>
+        <div class="links">
+            <p class="text-center text-gray-600 text-sm mt-4">¿No tienes una cuenta?</p>
+            <a href="{{ url_for('register') }}" class="text-center text-gray-600 text-sm mt-4">
+                Regístrate</a>
+        </div>
+    </div>
+    <!--Dashboard-->
+    {% elif form_type == 'dashboard' %}
+    <header class="fixed w-full top-10 z-45">
+        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900 top-0">
+            <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+                <a href="#" class="flex items-center">
+
+                    <img src="/static/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
+                    <span class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Milonga</span>
+                </a>
+                <div class="flex items-center lg:order-2">
+                    <div class="hidden mt-2 mr-4 sm:inline-block">
+                    </div>
+                    <button data-collapse-toggle="mobile-menu-2" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Abrir Menu Principal</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <li>
+                            <a href="{{ url_for('dashboard') }}"
+                                class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
+                                aria-current="page">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('pedidos') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Pedidos</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('inventario') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Inventario</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Clientes</a>
+                        </li>
+                    
+                    </ul>
+
+                    <button onclick="logout()"
+                            class="p-2 lg:ml-8 ml-4 rounded-full hover:bg-purple-700 transition-colors group"
+                            title="Cerrar sesión" 
+                            aria-label="Cerrar sesión">
+                        <img src="../static/images/logout.png" alt="" 
+                            class="w-8 h-8 group-hover:opacity-90 transform hover:scale-105 transition-all">
+                    </button>
+                </div>
+                
+            </div>
+            
+        </nav>
+    </header>
+
+    <main class="pt-20">
+        <!-- Start block -->
+        <section class="bg-white dark:bg-gray-900">
+            <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
+                <div class="mr-auto place-self-center lg:col-span-7">
+                    <h1
+                        class="max-w-2xl mb-4 text-2xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
+                        Optimiza la gestión de tu restaurante con Milonga</h1>
+                    <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                        Controla pedidos, administra inventario y mejora la eficiencia de tu cocina con nuestra plataforma
+                        diseñada para restaurantes.</p>
+                    <div class="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+                        <!-- Botón para ver el menú -->
+                        <a href="{{ url_for('pedidos_pendientes') }}"
+                            class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-medium text-center text-gray-900 border border-gray-200 rounded-lg sm:w-auto hover:bg-gray-100 focus:ring-4 hover:text-purple-700 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                            ...
+                            <span class="text-black">Ver Pedidos Activos</span>
+                        </a>
+    
+                        <!-- Botón para ordenar en línea -->
+                        <a href="URL_ORDEN_EN_LINEA"
+                            class="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:w-auto focus:outline-none hover:bg-gray-100 hover:text-purple-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                            <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6 9L4 22H20L18 9H6Z" stroke="#FFB703" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M9 9V6C9 4.34315 10.3431 3 12 3V3C13.6569 3 15 4.34315 15 6V9" stroke="#FB8500"
+                                    stroke-width="2" stroke-linecap="round" />
+                            </svg>
+                            <span class="text-black">Gestionar Inventario</span>
+                        </a>
+    
+    
+                    </div>
+                </div>
+                <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+                    <img src="../static/images/hero2.png" alt="hero image">
+                </div>
+            </div>
+        </section>
+        <!-- End block -->
+        <!-- Start block -->
+        <section class="bg-white dark:bg-gray-900">
+            <div class="max-w-screen-xl mx-auto px-4">
+                <div
+                    class="grid grid-cols-2 gap-8 text-gray-500 sm:gap-12 sm:grid-cols-3 lg:grid-cols-6 dark:text-gray-400">
+                    <a href="#" class="flex items-center lg:justify-center">
+                        <svg class="h-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" height="408"
+                            width="2500" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0.19000000000000128 0.25 367.46 61.17460741747068"
+                            class="h-9 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-600">
+                            <g fill="none"></g>
+                            <path
+                                d="M194.32.25h40.87v10h-29.83v14.2h29v9.66h-29v14.44h29.83v10h-40.87zM348.06 59.6c12.53 0 19.59-6 19.59-14.24 0-5.87-4.18-10.25-12.93-12.15l-9.25-1.89c-5.37-1-7.06-2-7.06-4 0-2.59 2.59-4.18 7.36-4.18 5.17 0 9 1.39 10 6.17h10.84c-.59-9-7.06-14.94-20.18-14.94-11.34 0-19.3 4.68-19.3 13.75 0 6.27 4.38 10.35 13.83 12.34l10.34 2.39c4.08.8 5.17 1.9 5.17 3.59 0 2.69-3.08 4.38-8.06 4.38-6.26 0-9.84-1.39-11.23-6.17h-10.9c1.59 8.98 8.25 14.95 21.78 14.95zm-24.93-1.09H311.4c-7.36 0-11.44-4.58-11.44-10.36v-22.9h-8.25v-9.76H300V3.24h10.9v12.25h12.23v9.76H310.9v20.11c0 2.29 1.59 3.39 4.08 3.39h8.15zm-47-43v3.88a21.16 21.16 0 0 0-13.73-5 22.61 22.61 0 1 0 0 45.21 21.1 21.1 0 0 0 13.73-5v3.89H287v-43zM263.3 50.16a13.15 13.15 0 1 1 13-13.14 13 13 0 0 1-13.02 13.12z"
+                                fill="currentcolor" />
+                            <path
+                                d="M170.06 23.56c-5.47 0-9.35 4.28-9.35 10.85v24.1h-8.35V16.09h8.25v5.18a11.19 11.19 0 0 1 9.94-5.48h3v7.77zM146.59 37.3c0-12.65-9-22.11-21.18-22.11a21.83 21.83 0 0 0-21.68 22.11c0 12.64 9.75 22.2 22.47 22.2a22.17 22.17 0 0 0 18.3-9.06L138.44 46a14.78 14.78 0 0 1-12.24 6.17 14.22 14.22 0 0 1-14-12.14h34.41zm-34.21-3.89c1.49-6.47 6.66-10.85 12.93-10.85s11.43 4.38 12.83 10.85zm-35.1-18.22a21.12 21.12 0 0 0-15 6.27V.25h-8.35v58.26h8.25v-5.38A21.45 21.45 0 0 0 77.3 59.5a22.16 22.16 0 1 0 0-44.31zm-.6 36.85A14.69 14.69 0 1 1 91.3 37.4 14.58 14.58 0 0 1 76.68 52zm-53.5-.4c8.06 0 14.32-6.18 14.32-15.44V.25h8.65v58.26H37.6V53a21.24 21.24 0 0 1-15.41 6.47c-12.43 0-22-9.06-22-22.8V.25H9v36c0 9.31 6 15.39 14.18 15.39z"
+                                fill="currentcolor" />
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="#" class="flex items-center lg:justify-center">
+                        <svg class="h-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" height="408"
+                            viewBox=".265 .264 69.77 22.518" width="2500" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="m33.285 4.683h4.233c4.26 0 7.646 2.62 7.646 7.038 0 4.815-2.91 7.276-7.646 7.276h-4.233zm2.037 12.515h2.143c3.519 0 5.477-1.693 5.477-5.398 0-3.333-2.276-5.318-5.239-5.318h-2.408v10.716zm14.605-11.007h-2.17v-2.17h2.17zm-2.064 2.355h1.932v10.478h-1.932zm5.53-3.863h4.233c4.26 0 7.647 2.62 7.647 7.038 0 4.815-2.91 7.276-7.647 7.276h-4.233zm2.064 12.515h2.143c3.519 0 5.477-1.693 5.477-5.398 0-3.333-2.276-5.318-5.24-5.318h-2.407v10.716zm14.578-11.007h-2.17v-2.17h2.17zm-2.037 2.355h1.931v10.478h-1.931z"
+                                fill="currentColor" />
+                            <path clip-rule="evenodd"
+                                d="m14.235 17.833c4.762-.159 8.52-3.942 8.572-8.626v-4.047h5.239v4.472c-.106 7.276-6.43 12.99-13.811 13.15-7.515-.054-13.891-5.822-13.97-13.152v-8.016c0-.82.529-1.35 1.322-1.35h21.22v4.896h-16.642c-.424 0-.688.265-.688.688v3.281c.053 4.736 3.89 8.652 8.758 8.705z"
+                                fill="currentColor" fill-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="flex items-center lg:justify-center">
+                        <svg class="h-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" height="408"
+                            xmlns="http://www.w3.org/2000/svg" width="2500" viewBox="0 0 26.458333 11.1125">
+                            <path fill="currentcolor" fill-rule="evenodd"
+                                d="M20.558408 4.3869066c-.0361.1959906-.09312.4223-.169641.6717091-.07688.2494092-.175417.5125338-.29164.7792681-.126324.2689006-.257351.520476-.388732.7471457-.129939.2245046-.259876.4176072-.3844.5738932-.121631.1523176-.234611.2649308-.334953.3349528-.07579.052698-.118029.058469-.132462.058469-.0068 0-.01228-.00108-.01805-.00368-.01269-.00573-.05487-.033927-.07327-.167838-.01733-.1227217-.0079-.2840593.02707-.4793268.0361-.2010435.09277-.4295179.169642-.6774837.07579-.2479659.174333-.5110905.292361-.7814344.11695-.2681775.244717-.5183097.38043-.7438962.134985-.2252263.266373-.4161638.390898-.5677586.12092-.147985.233889-.2587933.335673-.3298985.07616-.052698.118028-.058469.132462-.058469.0073 0 .01269.00108.01768.00368.01269.00546.05487.033927.07363.1678367.01695.1227217.0079.2815329-.02671.4728306m-5.066871 0c-.0361.1959906-.09312.4223-.169641.6717091-.07724.2508525-.175778.513617-.29164.7792681-.126692.2696222-.25771.5211976-.388731.7471457-.130293.2248647-.259877.4179673-.384401.5738932-.12163.1523163-.234251.2649294-.335313.3349528-.07579.052698-.117661.058469-.132107.058469-.0068 0-.01228-.00108-.01805-.00355-.01269-.00573-.05486-.033927-.07327-.167838-.01733-.1223534-.0083-.2833377.02707-.4793269.03573-.2006833.09277-.4284361.169641-.6774837.0758-.2483273.174335-.5110904.292361-.7814343.117306-.2689006.245439-.5190314.380071-.7438962.135708-.2255878.267094-.4165255.391257-.5677586.121276-.147985.234611-.2591548.335674-.3298985.07579-.052698.118028-.058469.132461-.058469.0073 0 .01269.00108.01768.00355.01269.00546.05522.033927.07364.1678367.01697.1227217.0079.2815329-.02671.4728306m-5.489882-.0505293c-.022372.1992386-.065685.4266313-.1288603.6764006-.0635299.249049-.1501513.5110905-.2580716.7796296-.1075657.2670971-.2219786.5183111-.3407279.7464239-.1162282.2230614-.2335273.413276-.3493886.5655922-.1126132.1479865-.2183686.2584332-.3147398.3280952-.071101.05162-.1108124.057392-.1241678.057392-.00614 0-.011595-.00108-.017326-.00368-.01296-.00573-.057746-.035019-.080855-.171086-.0216486-.1245267-.023463-.2851413-.0061379-.4778824.0180481-.195629.0588371-.4204951.1216304-.6680995.0628069-.2479659.1497898-.5103688.2580717-.7796295.108998-.2707054.223783-.5215578.3410889-.7467841.1155053-.2226999.2331659-.4150808.3497506-.5720899.1118901-.1515947.218007-.2634848.3140168-.3331467.071101-.05162.1108124-.057392.1245224-.057392.00614 0 .011595.00108.016602.00368.01371.00573.060269.036096.088794.1739727.02526.1227217.02707.2836991.0055.4789667M21.102712 2.6811099c.265291 0 .493406.08121.678206.2418284.178305.1548441.305717.3760993.378266.6572721.07038.2725088.08483.6020472.04331.97995-.04152.3732126-.150511.7991209-.324846 1.2658154-.164228.4410685-.352638.8290784-.559096 1.1528409-.09998.1573706-.202847.3046339-.307158.4407083-.01337.017325.0066.040066.02562.029603.06064-.03285.12092-.068578.18047-.1075657.135709-.087703.266013-.1822751.389815-.282256.345419-.279728.596272-.6579922.71827-1.0831789.07292-.2559067.153759-.5096472.241829-.759778.144376-.4118326.298497-.7962329.458392-1.1427349.158815-.3454188.290919-.6038521.392704-.7688007.115504-.1876895.277201-.3046339.481855-.3479467.191297-.040421.374293-.037542.542492.00791.172168.046928.312933.1321073.417967.2541019.114414.133185.139322.284781.07147.438542-.02021.053053-.07327.1743327-.15773.3609391-.08483.1876881-.180109.4067784-.290919.6709862-.106474.2537417-.21584.5284155-.324846.8157244-.106473.2822545-.189853.5457406-.247603.7832391-.0563.2310009-.07832.4230203-.06569.5706452.01228.1411272.06606.1411272.09529.1411272.04114 0 .114059-.019494.227393-.1118901.108998-.09024.224143-.1988772.342892-.3244842.118752-.1259684.232806-.2616813.338199-.4031701.09637-.1288605.179027-.2429129.246161-.3392827.05847-.084102.151595-.1321073.255186-.1321073.109366 0 .21548.054868.270704.1396826.05378.083011.05234.1819135-.0047.2707054-.07147.1115354-.196351.2984964-.381875.5724499-.183718.2707054-.40353.5497105-.6533.8298-.254101.2840594-.531665.5363565-.825829.7496722-.309326.2248647-.621899.3385611-.928337.3385611-.277201 0-.48402-.096011-.615041-.2858642-.119083-.1732477-.179725-.4056932-.179725-.6908357v-.045482c.000721-.033927-.03899-.053053-.06533-.031758-.05812.04656-.11803.092764-.179027.1382407-.360272.2681775-.776074.4955688-1.236632.6764005-.411112.1617005-.864091.2436333-1.346305.2436333l-.09818-.00108-.09853-.00328c-.328456-.000723-.57209-.1035959-.724766-.3067989-.02706-.035728-.05198-.072547-.07399-.1104441-.01768-.030326-.06353-.025264-.07363.00859-.04945.1649486-.09636.324124-.139684.4764403-.09384.3273721-.173972.6107101-.244356.866255-.07075.256267-.132107.4897951-.182635.6951691-.04873.197796-.08266.358053-.09998.476802l-.0011.0044c-.04439.224864-.196352.303909-.316544.330981-.05342.01187-.108998.01805-.165311.01805-.101781 0-.209344-.01985-.319431-.05847-.167474-.0592-.317986-.161338-.447924-.303909-.134631-.147986-.202848-.333148-.202848-.550433 0-.04404.01118-.140405.09746-.4952081.0646-.2616817.151594-.5872495.259515-.9680416.07292-.2580716.155926-.5388829.247966-.8391843.01078-.036096-.03032-.066054-.06136-.044758-.320876.2183685-.680734.4071399-1.073435.5612609-.411471.1617005-.864091.2436346-1.346305.2436346-.06498 0-.131384-.0015-.197074-.00437-.32809-.0007212-.571724-.103594-.724762-.306797-.02707-.035728-.05162-.072192-.07363-.1104441-.01804-.030326-.06353-.02491-.07363.00859-.04981.1653101-.09674.3248455-.140046.4764402-.09421.3284552-.174333.6121531-.243994.8662543-.07075.256268-.132463.4897951-.182997.6951691-.04873.198157-.08229.358415-.09998.476803l-.000721.0044c-.04439.224862-.196712.303908-.316906.330979-.05342.01187-.108643.01804-.164948.01804-.101782 0-.209346-.01985-.319793-.05847-.167477-.05918-.317627-.161335-.447566-.303906-.134631-.147986-.202848-.333148-.202848-.550434 0-.04439.01078-.140767.09746-.4952081.06498-.2642084.151955-.5897769.259155-.9680412.06353-.2248647.133908-.4645296.212954-.7233229.01159-.038988-.0361-.068578-.06641-.040789-.134631.1227217-.273233.2371369-.415443.3418105-.304993.2248648-.615402.3389212-.922201.3389212-.2772016 0-.4843812-.096011-.6150411-.2858641-.0526771-.0765623-.0938208-.164994-.1237782-.2642532-.0263424-.0884262-.139684-.1155052-.2039301-.0487285-.0902406.093842-.1894943.1793871-.2959714.2548222-.1386007.0981801-.2934435.1804703-.4609199.2447177-.1725294.0656853-.3591343.0992579-.5547635.0992579-.2645692 0-.4966533-.0804867-.6893943-.2396635-.1876895-.1537596-.3266505-.371768-.4136374-.6486081-.0844566-.2681789-.1155053-.597716-.0923961-.9799514.0230956-.3775425.1089981-.8012858.2555452-1.2600395.3122121-.9514373.7193519-1.6577966 1.2105908-2.1006685.500263-.4511756 1.0077438-.6800102 1.5083673-.6800102.211871 0 .3912577.04259.5323857.1263232.138962.083011.246161.1927411.318709.326289.04836.089872.08374.1862447.105397.2887521.0039.018048.02851.02165.03754.00546.02527-.045482.04946-.086257.07219-.1234448.115506-.186968.275038-.3039125.474638-.3475853.186604-.040421.36924-.037897.542131.00764.17722.046928.320514.1324619.425908.254462.114414.133185.139322.284781.0711.438542-.01985.05233-.0711.1707177-.15737.3609337-.0841.1862448-.182274.4118313-.290918.6709861-.107566.2566284-.216923.5313035-.324845.8157244-.106843.2822545-.190215.5461008-.247605.7832378-.0563.2313624-.07832.4233832-.06568.5706465.01228.1411273.06606.1411273.09494.1411273.04152 0 .114414-.019494.227391-.1118902.06244-.05162.127414-.1097211.193825-.1736125.257346-.2479609.429875-.5186663.545015-.8554226.153038-.446843.314017-.8879114.479327-1.313098.1765-.4522574.348668-.8583142.511813-1.2069825.08518-.1804702.220172-.3021061.399921-.360579.168558-.054868.341448-.066409.511452-.034282.169641.032481.318347.099981.44179.2010436.05486.044758.09853.093119.131015.1440152.0086.01371.01877.015156.03068.00396.145819-.1346311.306798-.2580718.48041-.3681584.254101-.162062.54177-.2439947.855065-.2439947.264931 0 .493405.08121.677845.2418283.178666.1552043.306077.3760993.378626.6572721.07038.2721487.08483.6020472.04331.97995-.04152.3728512-.150873.7991209-.324845 1.2658155-.164589.4414299-.353.8294399-.559457 1.1528408-.09998.1573706-.202848.3046339-.30716.4407083-.01337.017326.0068.040066.02599.029603.06028-.03285.120554-.068577.180471-.1075657.09709-.062807.191297-.1292152.282254-.198517.34578-.2627645.603853-.6222603.74137-1.0315651l.05414-.1598971c.162424-.4800499.334232-.9528805.510371-1.405498.176859-.4529792.349028-.8590372.512172-1.2069825.08483-.1804703.219452-.301746.399922-.360579.168559-.054868.341449-.066409.511451-.034282.169641.032481.317988.099981.441429.2006834.05487.045114.09853.093488.131017.1443754.0087.01371.01877.015156.03068.00396.14582-.134631.306799-.2580717.48041-.3681583.254453-.1620767.542122-.2440094.855055-.2440094zM4.5016562.43281672c.3804305 0 .7615828.044036 1.1333508.1302929.3742945.087349.7139388.220172 1.0088256.39486766.2984978.17686052.5435757.39883742.7283772.65979712.1884098.2656511.2836978.5771428.2836978.9258097 0 .3753776-.083733.7276542-.2490476 1.0467253-.1638668.3158216-.3894546.6042135-.6699043.857231-.2779233.2512139-.6074617.472832-.9795898.6583538-.306799.1530393-.6327277.2836992-.9712888.3887329-.021663.00682-.029234.018048-.028156.039698.00723.1660318.019126.3302587.036096.4883509.019126.1815521.04439.3584127.07544.5262493.030312.1649499.067131.3255686.1086434.4775235.032481.1176605.068578.2320839.1071973.3407273.024542.0693.050529.1371562.076886.200682.053053.1281375.1115355.2508538.1736125.3645487.060993.1118903.1270462.2180085.1963508.3154615.0675.094934.140044.1840798.2154805.2656511.073638.07941.1515947.1523176.231724.2172867.077963.063162.1602571.1205528.2443562.1696415.081933.04836.1678365.09024.2555452.1248907.086271.033928.1754159.061361.2652895.08121.09024.019849.1829968.032481.2768416.03862.093488.00573.1909362.00464.288029-.00396.098903-.00859.1999604-.024542.3003027-.048006.1028726-.023818.2075394-.055222.3118516-.093842.1068427-.039697.2147589-.088072.3212359-.1425719.040789-.02094.081933-.043313.1227218-.066408.1328303-.075794.3024662-.039697.3916196.08301.089518.1227218.069668.2923617-.045836.3919808-.056668.04873-.1136909.096366-.1700029.1418491-.136796.1104436-.2739535.2129546-.4078616.3042726-.1270462.08662-.2562682.167476-.3840401.239303-.063885.0361-.131016.07147-.1992386.1053961-.131016.06568-.2634862.123446-.3945077.171807-.1302929.048-.2613197.08807-.3890916.118383-.1274146.03032-.2559068.05233-.3811523.06497-.089518.009-.1790269.01371-.2663741.01371-.035374 0-.070746-.000722-.1061197-.0025-.1212757-.0051-.2418297-.01912-.3587742-.04187-.057746-.01118-.1162281-.02491-.1732509-.04079-.055222-.0148-.1118901-.03248-.1685583-.05305-.1086456-.038946-.2165659-.086952-.3197949-.14289-.1010585-.054867-.2006833-.118028-.2952484-.188049-.076517-.0566681-.1515946-.1191071-.2226998-.1851631-.0855478-.079409-.1689198-.167837-.2479659-.26168-.077963-.092764-.1526778-.1931039-.2219782-.2981364-.0696551-.1046736-.135354-.2165637-.1959905-.3320649-.0602832-.1155051-.1176607-.2382201-.1696415-.3645487-.0516206-.1252455-.0996261-.2580717-.1432922-.3955893-.042958-.1349994-.0822874-.2779247-.1169512-.425188-.0342955-.1469019-.0642529-.2992182-.0891492-.4529792-.0223725-.136077-.0411437-.2772015-.0559451-.4204937-.0043655-.0433125-.0667766-.0490829-.0794089-.0068236-.0541444.1869664-.1032277.3681583-.1465418.5414094-.0544987.2172854-.1046735.4150793-.1501513.5926616-.0443905.173974-.0757942.3140182-.0938423.416164-.0360961.1811919-.1562875.2956099-.3490298.3327865-.1656703.0324808-.3436141.0187715-.526971-.0396981-.1811916-.0581112-.34578-.1588108-.4897952-.299938-.150873-.147985-.2273913-.3338698-.2273913-.5529599 0-.178304.045482-.460197.1386008-.8612022.0909504-.3916182.2219782-.8557876.3901749-1.3802321.1667548-.5201145.3692415-1.0936476.6013256-1.7036358.1992386-.5240843.4230216-1.0517769.665573-1.5722529.079409-.1703629.2436346-.2876676.4331275-.3093239.4284348-.0490833.8002028-.0368193 1.1153027.0360962.1898545.0440357.2916401.2472428.2122325.4222987-.2032084.4468443-.3905364.8926041-.5580129 1.3264533-.135354.3511947-.2652895.6987786-.3880099 1.0369796-.011869.033572.022741.064608.055222.049806.1635067-.073993.3248471-.1613401.4825777-.2609594.2584319-.1635054.4937655-.3587742.6998619-.5800308.2050132-.2212551.3732113-.4706643.4999014-.7417298.1248908-.2685391.1884098-.5601792.1884098-.8676997 0-.3952279-.1111671-.6872281-.3302601-.8673368-.2219768-.1822751-.5345516-.2750366-.9294193-.2750366-.4204939 0-.8048955.09818-1.1423735.2920001-.346502.198517-.6460817.4425118-.8904379.725488-.246161.2851425-.4403467.5897764-.5764211.9055979-.1349857.312935-.2035699.5872487-.2035699.8157231 0 .1635067-.087703.2815329-.2468827.3324264-.1396826.0447584-.2938036.0382655-.45189599-.0198486-.15195615-.055591-.29272184-.1656719-.41869031-.3266507-.12669155-.1617018-.19093633-.3807921-.19093633-.6511359 0-.2360538.0909504-.5139771.27792329-.8496516.18191354-.3273721.45117424-.6460816.79948114-.9474661.3479453-.3006628.7868488-.56162242 1.3058788-.77529818.5219193-.2151205 1.1250497-.324124 1.7924262-.324124ZM25.207679.18304606c.582196 0 1.053944.46561276 1.053944 1.03950594 0 .5738946-.471748 1.0395061-1.053944 1.0395061-.582195 0-1.053945-.4656115-1.053945-1.0395061 0-.57389318.47175-1.03950594 1.053945-1.03950594z"
+                                style="stroke-width:.360939" />
+                        </svg>
+                    </a>
+
+                    <a href="#" class="flex items-center lg:justify-center">
+                        <svg class="h-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" height="504"
+                            width="2500" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0.6000000000000008 -2.367270994676243 236.7 52.76727099467625">
+                            <linearGradient id="a" x1="11%" x2="103.2%" y1="50%" y2="50%">
+                                <stop offset="0" stop-color="#1885c8" />
+                                <stop offset=".14" stop-color="#1881c3" />
+                                <stop offset=".32" stop-color="#1a74b3" />
+                                <stop offset=".52" stop-color="#1b6099" />
+                                <stop offset=".73" stop-color="#1e4475" />
+                                <stop offset=".96" stop-color="#212047" />
+                                <stop offset="1" stop-color="#22183d" />
+                            </linearGradient>
+                            <linearGradient id="b" x1="2.6%" x2="107.1%" y1="53.5%" y2="46.4%">
+                                <stop offset=".24" stop-color="#52bce8" />
+                                <stop offset="1" stop-color="#3f88b9" />
+                            </linearGradient>
+                            <linearGradient id="c" x1="0%" y1="49.9%" y2="49.9%">
+                                <stop offset=".54" stop-color="#52bce8" />
+                                <stop offset="1" stop-color="#49a4d3" />
+                            </linearGradient>
+                            <linearGradient id="d" x1="37.1%" x2="65.1%" y1="52.6%" y2="43.3%">
+                                <stop offset="0" stop-color="#3a78ac" />
+                                <stop offset=".29" stop-color="#34689e" />
+                                <stop offset=".86" stop-color="#253e78" />
+                                <stop offset="1" stop-color="#21336e" />
+                            </linearGradient>
+                            <linearGradient id="e" x1="-1.6%" x2="104.5%" y1="59.6%" y2="45.1%">
+                                <stop offset="0" stop-color="#52bce8" />
+                                <stop offset=".25" stop-color="#51b9e6" />
+                                <stop offset=".41" stop-color="#4eb0de" />
+                                <stop offset=".56" stop-color="#48a1d0" />
+                                <stop offset=".69" stop-color="#418cbd" />
+                                <stop offset=".78" stop-color="#3977ab" />
+                                <stop offset=".85" stop-color="#33669c" />
+                                <stop offset=".98" stop-color="#243b75" />
+                                <stop offset="1" stop-color="#21336e" />
+                            </linearGradient>
+                            <g fill="currentcolor" fill-rule="evenodd">
+                                <g fill-rule="nonzero">
+                                    <path
+                                        d="M49.4 37.7c1-.2 2.1-.8 3.2-.7 2 .2 2.8-.1 4.3-1 1 .5 2.3 1.8 4.9 1.8.8 0 1.8-.4 1.6-1.3 0-.7 1.4-.4 1.5-1.4.2-.5 0-.5-.8-1-1.5-.9-1.5-2.5-2.7-3.5 0-.2-.5-.4-.5-.6-3.8-10.3.7-6.8-8-16.5-2.4-1.8-6-6-9.1-5.8-3 .1-3.7 1.8-5.8 2.5-2.7 1-4.3 1.2-6.5 3.2-1.4 1.2-3.2-.3-5.2 1.8-4.2 4.3-4.7.3-11.6 5.7C11 24 6 21.8 10 17.8c2-1.5 4.6-3.3 3.7-6-.4-2-3.3-2.7-5.2-3-1-.2-3-1.6-3.5-2-1.9 2-1 6.8 3 7.3.2 0 .3.1.3.3l-.1.4C5.5 17 4.9 18 4.8 20.5c-.2 3.4 2.6 6 6.2 6 .6 0 1.2 0 1.8-.2l.2.1c.3 1.6.4 3.5.9 4.1l-.1.5c-1.2 1.1-3.6-.1-4.3 2-.4.8-.3 1.8-1.2 2.2-.6 0-.8-1-1.7-1s-2.4.6-3 2c-.7.5-1.4.2-1.7 1.3-.2 0-.3.5-.2.8 0 .4-.2.9-.4 1.3-.7.8 0 1.9 1 2 .8 0 1.3.4 1.6.1H4c.2-.3.4-.1.6 0 .4 0 1 .3 1.6.2l.3.1c1.5 0 2-.6 2.5-1.4 0-.4.3-.6.4-.9l.4-.2 1 .2c2.4.2 3-2.2 4.8-2.4.5 0 1.3 0 3.1.3 1.2 0 2.4-.8 3.6-1.4.5-.3 1-.4 1.4-1 .5-.5 1.2-3.2 2-3.2 1.4 0 2.8-.5 4.3-.5 1.8 0 3.6.4 5.2-.2l.5.1c.2.3.9.5.7 1l-.3.2c-.3 0-.8 0-1 .4-.2.2-.6.2-.8 0-1 .1-3.7-.3-4 1.1.2 1.1 1.1 4 3 3.7 0 0 .3 0 .3.2.7 1.4 2 2.3 3 2.3 1.1 0 3.9-1 6-2h.9c1.3-.1 1.8-.5 2.5-2 1-1 .2 2 3.3 1.4zm-2-6.5c-.3.3-.6.4-1 1-.7-.3-.8-1.2-1-1.6l2.7-.5c-.4.4-.6.6-.7 1.1z"
+                                        fill="currentcolor" />
+                                    <path
+                                        d="M63.2 34.5c-1.3-.7-1.8-2.2-2.6-3.4-2.1-2.1-2.5-5.9-3-9-.6-3-3.2-5.1-5-7.4-1.5-1.3-5.6-5.2-7.5-5.8-2.5-1-4.7 1-6.9 2-1.7.6-3.5.8-5 2.2-2.4 3-3.8.6-6.6 3-4 4.3-5.6.5-11.3 5.5-1.5 1-3 1.9-4.8 1.8-2.9-.2-3.8-4-1.6-5.8 1.6-1.8 5.5-3.6 3.6-6.5-2-1.8-4.4-1-6.8-3-1.1 1.7.3 4 2.1 4.7.8.4 2.5-.3 2.9.8-.8 1.5-2.9 2.3-3.9 3.8-2.4 2.8 0 7.5 3.4 7.7 1.3.4 3-.7 3.8-.2 0 1 0 1.9.2 2.8 0 1 1.2 2 .6 3-1 .9-2.3 1.3-3.6 1.3-.7.7-.8 1.6-1.3 2.6-.5.9-1.5 1.3-2.2 1.7-.4.7-1 1.5-1.9 1.6-.6.7-.7 1.6-.9 2.5 2.5.7 3 .4 4.4-1.8.6-.5 1.3 0 1.8 0 1.4-.2 2.5-1.1 3.5-2 3.7-1 3.6 1.4 7.9-1.3.7-.3 1-1.1 1.3-1.7.3-.7 1.3-2 .1-2.4-3.2 6.5-8.7 1.2-13 6.1-.6.2 0-.8 0-1 3.1-4.4 10-.5 12.4-6.3.4-.9.2-4.4 1.2-4.3.1 0 .4 0 .4.3-1 4.3-.3 5.6 4.2 4.8 1.6-.4 6.1 1.2 6-1 0-.4-.4-.6 0-.9l.5.1c.3 1.7 1.8 3 3.3 3.8 2.9 2 1.7 4.5-1.7 4.4-1-.6-1.4-1.7-2.2-2.6-1-.9-2.2-.5-3.3-.2-.6.8.7 1.8 1 2.6.5.3 1.2-.2 1.6.4s.6 1.2 1.2 1.6c1.8 1.7 5.4-1.2 7.3-1.4 1.6.2 2.4-1.3 3-2.5.8-1.7-1.6-3.4-1.8-4.9-.5-.1-1.3-.6-1.7 0 .3.8 2 3.5 2 4.4-.3.6-.8 2-1.6 1.9.2-.7.5-1.5.5-2.3-.4-.9-2-3.4-2.1-4.3.3-.8 2-.3 2.6-1.2.7-1.1 1-2.2 1.1-3.6 0-.2.2-.3.3-.3 1 .6 0 3.7-.6 4.3 0 1 2 .4 2.4 0 .8.2 2.4-.6 2.8 0-.5.5-.8 1.2-1 2-.6.6-1.7 1.2-1.7 2.2.2.6 1-.4 1 .4-.8 1-.7 1.4-.5 2.6 1 1.3 2.7.2 3.9-.1 2-.8 4.1.4 5.6-1.6.5 0 .8.2 1 .6a5.6 5.6 0 0 0 4.4 1.7c.7-.5-.8-.8-1-1-.7-.4-1.6-1-1.8-1.8-.3-1.2-1.1-2.2-1.6-3.3 2.3 0 2.6 5 6 4.3.2-.1.2-.3.1-.4zm-17-15.3l-.4.1c-.3-1-.3-2-.9-3-.3-.2-.6-.6-.4-1 .2-.2.4-.2.6-.1 1 .7 1 1.6 1.1 2.8.2.2.1.8 0 1.2m8.3 14.3a6 6 0 0 1-1.4.2H53c-.6-.6.6-1.7 1.3-1.6h.3c.4.1.3 1 0 1.4m2.5-5.9c0 .2-.2.7-.5.7-.2 0-.3 0-.3-.2 0-.7-.1-1.5-.7-2-1.3-2-1.6.6-2.1.3-.3-.6.2-1.2.4-1.7l.3-.4c.2-1.3 1.4-.6 1.6.2.7.8 1.5 1.8 1.4 2.8v.3M5.8 36.9c.7-.4 1.1-1.1 1.4-1.7-.2-.4-.5-.8-1-.6l-1.5 1c-.3.7.4 1.5 1.1 1.3m-2.2 0c-1.2.5-.6 2-1.3 2.7 0 .1-.2.3 0 .4l1.5.4.7-2.7c-.2-.3-.5-.7-1-.8m32.8-2.2c.4.5.4 1.2 1 1.6.5 0 1.2-.1 1.6-.5.4-.2 0-.5-.2-.8-.3-.4 0-1.2-.8-1.2-.7.1-1.6 0-2.3.2 0 .3.6.3.7.7"
+                                        fill="currentcolor" />
+                                    <path
+                                        d="M85 27.8c-.1-1.7-.8-3.5-2-4.7a24 24 0 0 1-3.8 7.9c-.9 1.4-2.5 1.4-3.5 2.7-.3-.1-.2-.3-.5 0 1.3-1.3-.2-.6.4-1.3 2.2-2.4 4.2-4.6 5-8l-.8 1.1 1-4-.4-.2a19.6 19.6 0 0 1-7.7 11.4c-5.3 3.8-.8 2.5 0 1.7-6.6 6.9-21.5 11.3-30 4.3 1.2 1.2 2.7 2.6 4.2 3.5-.9-.2-1.5-.9-2.4-1.1 0 0 2 2.6 8.1 3.3l1.1.1c8.2.7 8.7-.8 14.5-2 .2.1-1.9 1.2-4.8 2-4.6 1.7-9.9.4-13.7 0 0 0 .7.4 3.8 1.5-.3 0-1.3.2-5.5-1.6 10.3 6 21.4 1.4 30.5-5.3l.3.1c0 .2 0 .2-.8 1 1.6-1.2 2.4-3.1 4-4.3a17.4 17.4 0 0 1-3.5 4.4 27.8 27.8 0 0 1-11.7 6.8l-1.2.3 1.3-.2c-.6.3-1.3.4-3 .8 10.2-1.6 20.8-9.6 21-20.2z"
+                                        fill="currentcolor" transform="translate(1)" />
+                                    <path d="M74.6 41.8C70.5 44.3 66 46.6 61 47c6 .3 13.2-4 17-7.6l-3.4 2.3z"
+                                        fill="currentcolor" transform="translate(1)" />
+                                    <path
+                                        d="M68 42.5c-5.7 1.2-6 2.6-14.3 2-.6.2-4 0-4.6-.2l.5.2c.8 0 6.5 1.2 8.4 1 2.3 0 9.8-2.2 10-3z"
+                                        fill="currentcolor" transform="translate(1)" />
+                                    <path
+                                        d="M81 21.6h-.3a53 53 0 0 1-1 4c.3-.5.6-.6 1-1-1 3.2-3 5.4-5.2 7.8-.6.6.9 0-.4 1.3.3-.3.2-.1.5 0 1-1.3 2.6-1.3 3.5-2.7a23.7 23.7 0 0 0 3.9-7.8 6.7 6.7 0 0 0-2-1.6z"
+                                        fill="currentcolor" transform="translate(1)" />
+                                    <path
+                                        d="M54 39.5c-3.9-2.1-1.1-.7 2.2.1 2.4.6 5 .8 7.4.7 4-1.6 7.3-3.8 9.2-5.9-.9.9-5.3 2.1 0-1.7 4-2.8 6.3-6.8 7.6-11.4-1-.4-2.1-.7-3.2-.8-1.6 3.8-1.9 6.4-5.4 8.5-3.9 2.5-1.4 1.9-1.4 1.9l.9-.5c-1.5 2.4-4.2 4-7.3 4.7-.1 1-1.6.6-1.5 1.4.1.9-.8 1.3-1.6 1.2-2.6 0-3.9-1.2-5-1.8-1.6 1-2.4 1.2-4.5 1-1 0-2 .5-3 .8 1.5 1.3 7.8 3 5.5 1.8zM73.8 29c.6-1.4 2.1-2.2 2.7-4-.1.3.4.4.6.4.9-.1 1-1.3 1.2-1.6-.2 2.7-2 5-4 6.8a.9.9 0 0 0-.9 0c0-.6 1-1.3.4-1.6z"
+                                        fill="currentcolor" transform="translate(1)" />
+                                    <path
+                                        d="M78.3 13.1c-2.5-1.4-5.4-1.8-8-2.9 4 1 8.8 1.8 11.8 4.8l.2.2c.3.2.6.8 1 .5C76.8 3.4 57.8 4.8 48.7 10l1.5 1.2C52 9.8 59 8.8 59.6 8.9c-2.4.5-6.2 2-8.6 3l.3.3a34.5 34.5 0 0 1 17.3-1.7c-4.1.5-11.5.4-16.4 2.4 1.3 1 2.6 2.9 3.7 4.2 8-3.9 12.6-4 16.7-3.5.4.2-2.9.4-2 .6.8.2 2.5-.3 2.8-.3h2.3c1.9.5.1.7-.5.6h-1l-2.3.4c-.2 0-2.4 0-2 .3.4 0 2.2.3 2.7.2l.8-.1c.2-.1.7-.2.8 0-.7 1.5-2.6.4-4 .7-1.3.1-2.6.7-2.8.5 4.1-2.6-6 1.2-5.8 1.9 0 .5 1.6-.3 2-.2.6 0 1.6-.5 2.3-.7.5 0 .7.3 1.2.2 1.1 0 2.1-.5 3.2-.8l.7.4c2 1.8 3.1.3 5.3 1 .4 0 0 .2-.2.3-1.1.8-2.5 1-3.9 1l-.6.1-1.4.2c-1.2 0-2.5.2-3.6.8-.5 0-1 .1-1.3.4s-.8.2-1 .5c-.6.3-4.3 1-3.9 1.9 6.2-.9 13.5-5.2 21.2-2 3.2 1.7 5 4.5 3.7 10l.2-.4c.3-1.3.6-2.4.6-3.7.8-4.7-2.7-11.4-7.9-14.2zm-7.2-4.6c1 .2 3.2.6 3.8 1.3-1.7 0-2.6-.8-2.6-.7-.3-.1-1.4-.5-1.2-.6z"
+                                        fill="currentcolor" />
+                                    <path
+                                        d="M51.1 11.8l-.7-.6C52.2 9.8 59 9 59.7 9l-3 .9a75 75 0 0 0-5.6 2zm35.8 10C86 13.6 83.1 6.5 73.3 4c6 1.5 6.5 2.3 7.3 2.8-4.7-4.4-12.3-5.9-20-4.6A22.1 22.1 0 0 1 77 3.8a26.7 26.7 0 0 0-32.3 3.9c1.5.3 2.9 1.3 4.1 2.2C58 5 77 3.6 83.4 15.8c-.4.2-.7-.4-1-.6l-.2-.1c-3-3-7.8-4-11.9-4.8 2.7 1 5.6 1.4 8.1 2.9 6.7 3.8 9.6 11.5 7.3 17.7 1-3 1.4-6 1.2-9.2zM64.6 10c-4.2 0-9.5.8-13.1 2.1l.8.7a56 56 0 0 1 15-2.1c3.8-.2-1.3-.7-2.7-.7zm7.8-.9s.9.8 2.6.8c-.7-.7-2.7-1-3.8-1.3z"
+                                        fill="currentcolor" />
+                                </g>
+                                <g fill="currentcolor">
+                                    <path
+                                        d="M205.1 31.6c0 1.8 1.5 3.3 3.4 3.3s3.4-1.5 3.4-3.3V20.8h5.9v12c0 4-4.2 7.3-9.4 7.3s-9.4-3.3-9.4-7.3v-12h6v10.8zm26.2 7.8h6V7.9h-6zm-10.1 0h6V7.9h-6zM111.4 14.5h-3.3v24.9h-6.4v-30h11c5 0 9 4 9 8.9 0 4.1-2.9 7.7-6.9 8.6l8.8 12.6h-7.5l-6.4-9.8v-7.2h1.5c2.4 0 4.3-1.8 4.3-3.9a4 4 0 0 0-4.1-4.1" />
+                                    <path
+                                        d="M129.3 27.9c-.1-2 1.4-3.8 3.5-3.9 2-.1 3.8 1.4 3.9 3.5v.4zm13.2 3.4l.1-1.3c.1-6.5-4.2-10.1-9.7-10.1a10 10 0 0 0-9.9 10 10 10 0 0 0 9.9 10c4.2 0 7.4-1.9 9.1-4.8l-4.9-2.3a4.3 4.3 0 0 1-3.8 2.3c-2.3 0-4.1-1.7-4.1-3.7v-.2zm13.6 3.5c-2.4 0-4.4-2.2-4.4-4.8 0-2.7 2-4.8 4.4-4.8s4.4 2.2 4.4 4.8c0 2.7-2 4.8-4.4 4.8zm10.3 4.6V7.9h-6v14.9a8.6 8.6 0 0 0-6-2.5c-4.9 0-9 4.4-9 9.8s4 9.8 9 9.8c2.3 0 4.5-1 6.1-2.6v2.1zm20.4-5.2h-5.7V14.5h4c1.8 0 3.2 1.6 3.2 3.4s-1.4 3.2-3.2 3.2H183v5.4h3.8c2.1 0 3.7 1.7 3.7 3.8v.1c-.1 2.1-1.4 3.7-3.7 3.8m5-11.1a7.7 7.7 0 0 0 2.6-5.8 8 8 0 0 0-2.2-5.4c-1.4-1.6-4-2.4-7.4-2.4h-10.2v30h13.3c5.1-.1 9.2-3.9 9.2-8.6-.1-3.5-1.3-5.9-5.3-7.8" />
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="#" class="flex items-center lg:justify-center">
+                        <svg class="h-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            xmlns="http://www.w3.org/2000/svg" width="2500" height="504"
+                            viewBox="25.278 135.433 1248.358 453.222">
+                            <path
+                                d="M208.6 135.5c3 1.4 4.9 4.3 7.3 6.6 3.9 3.4 6.801 7.9 10.601 11.4 4.7 4.5 7.7 10.2 11.6 15.3 6.8 10.3 12.8 21.3 15.9 33.3 3.2 8.2 3.7 17.1 3.5 25.9.2 8-2 15.9-5.601 23.1-6.199 10.9-17.399 18.2-29.1 22.1-14.6 3.5-30.7 4.1-44.8-2.1-5.101-2.8-10.9-4.7-15-9.1-9.5-7.8-15-20.5-13.2-32.8 2.8-21.9 15.9-40.7 29.9-56.9 1.3 2.4.199 5.2 1.1 7.7 1.2 5.3 3.1 10.9 7.1 14.7 4.9-4.5 10.101-9 14.301-14.2 3.8-5.6 6.899-11.8 8.199-18.4.301-8.4 1.101-17.2-2.1-25.2l.3-1.4zM25.4 235.4c23.4.2 46.9-.2 70.301.2 0 23.3.199 46.6-.101 69.9 16.601.3 33.2.1 49.9.1.2 1.8.3 3.6.3 5.4-.2 19.2.1 38.3-.2 57.5-16.7.2-33.3 0-50 .1.3 34.5-.1 68.9.2 103.4.6 3 1 6 .9 9.1-.301 2.801 1.399 5.101 2 7.7 1.3 6 4.6 11.4 8.399 16.101 5.601 5.6 12.8 9.5 20.5 11.199 7 1.101 14 1.7 21.101 1.2.399 1.2.6 2.4.6 3.7-.1 18-.1 36 0 53.9 0 2.5-.5 5-.9 7.399-10.1 0-20.199.7-30.3 0-6-1.3-12.399-.7-18.2-3.3-16.1-3.8-31.5-11.8-43-23.9C40 538.8 30.9 515.8 27.2 493c-1-2.5-.4-5.4-.801-8.1-1.399-5.5-.8-11.301-1-16.9-.099-77.5-.099-155.1.001-232.6zM367 300.2c4.199-1.1 8.699-.3 12.899-1.2 8.8-1.1 17.5.3 26.2.6 6.1-.1 12 1.7 18 2.9 22.3 5.4 43.4 17.3 58.7 34.7 2.7 4.5 6.8 7.8 9.399 12.4 6.5 10.3 10.801 21.8 14.5 33.4 2.301 8.5 3.5 17.3 4.601 26 .5 19.3.2 38.7.3 58-.1 38.5.1 77-.1 115.5-23.4-.3-46.7-.1-70-.2-.2-.1-.7-.5-.9-.7-.1-53.899 0-107.8 0-161.6.1-6.6-1.1-13-2.5-19.3-2.5-6.4-5.7-12.5-10.1-17.7-2.601-3.1-6.2-5.1-9.101-7.8-4.5-3-9.8-4.4-14.899-5.8-2.7-.2-5.4 0-7.9-.9-10.7-.7-21.6.2-31.6 4.3-7.301 3.5-14.101 8.3-18.9 15-7.9 9.4-10.5 22.2-10.3 34.2 0 53.4.1 106.9 0 160.3-23.601.2-47.2-.1-70.8.2-.4-51.5 0-103.1-.2-154.6.1-6.601-.1-13.2.4-19.801 1.3-3.3.399-6.899 1.399-10.1 1.8-12.2 6.4-23.8 11.5-34.9 5-9.7 11-19 18.8-26.7 6.101-6.2 12.4-12.7 20.101-17C331.4 309 349 302.7 367 300.2zM1205 299.6c8.699-.2 17.3-1.9 26-.5 4.699.6 9.5.5 14.199.7.9 8.7.2 17.5.4 26.2v35c0 2.2.3 4.5-.6 6.6-2.301-1.699-5.4-1.1-8-1.8-10.601-.899-21.5-.399-31.5 3.601-11.9 4.1-22.301 12.8-28.101 24.1-1.7 2.1-1.7 5.1-3.6 7.1-3.101 11.2-3.3 22.9-3.101 34.4-.1 49.2.301 98.3-.199 147.5-23.301-.3-46.7 0-70.101-.2-.2-.2-.5-.6-.7-.8v-160.5c-.3-6.7 1.2-13.2 1.101-19.8 1.6-3.2 1.2-6.9 2.2-10.2 5-25.3 18.3-49.2 38.5-65.5 3.899-4.4 9.5-6.5 14.1-10C1170.5 306.4 1187.8 302 1205 299.6zM168.5 305.5c23.6.4 47.2-.1 70.8.2 0 91.5-.1 182.899 0 274.3 0 .9 0 2.7-1.4 2.4h-69.199c-.601-15.1-.101-30.3-.301-45.4.1-77.1 0-154.3.1-231.5zM909 491.1c6-2.3 11.8-5.3 17.899-7.399 8.8-3.4 17.4-7.5 26.2-10.9 18.2-8.399 37-15.399 55.4-23.3 4.399-2.4 9.399-3.5 13.699-6.1 4.9-1.9 9.801-3.601 14.601-5.801 4.2-2.5 9-3.5 13.3-5.699 5.7-2.301 11.2-4.9 17-7 5.9-3.301 12.5-4.9 18.4-8.101 1.6-1.1 4.199-.8 5.199-2.7-1.699-2.399-.8-5.399-1.699-8-1.301-4.699-2.601-9.3-3.7-13.899-4.5-13.9-11-27.2-19.8-38.8-10.7-15.5-25.4-28-41.7-37.2-10.7-6.5-22.7-10.2-34.7-13.4-7.4-.9-14.5-3.5-22-3.4-6.8-.9-13.8-1.3-20.5-.1-11.9.2-23.3 3.1-34.6 6.4-19.7 6.9-38.4 17.4-53.5 31.9-4.5 4.2-8.2 9.1-12.5 13.4-6.7 8.6-12.801 17.7-17.4 27.5-6.5 14.7-12.7 30.1-13.4 46.4-2.199 7.8-1.5 16-1.6 24-.2 5.1.6 10.1 1.6 15-.3 5.199 1.7 10 2.4 15 1.7 10.6 6.4 20.399 10.7 30.199 11.8 24.2 30.399 45.2 53.7 58.9 15.3 9.4 32.3 16.1 50.1 18.6 14.5 2.301 29.4 2.7 44 .801 5 .399 9.8-1.801 14.8-2.101 21.3-5 42.2-14 58.3-29.1 4.801-3.8 9.301-8.3 13.101-13.101 6.399-6.5 11-14.399 15.6-22.199 4.4-8.301 8-17.101 10.601-26.2-1.4-.601-3-.4-4.4-.4-23.4.101-46.7-.1-70.1 0-2.2 0-2.2 3-3.601 4.2-4 5.8-9.1 10.7-14.5 15.3-7.8 5.601-17 8.601-26.1 11.3-2.4.301-4.7.2-6.9 1.101-5.6.399-11.3.2-17 .1-6.3-1.2-12.6-2.6-18.7-4.6-9.399-4.8-18.6-10.3-25.699-18.101-1.801-2.199-4.7-3.899-5.301-6.8 1.601-.7 3.101-1.8 4.9-2.1 2.9-.5 5.099-2.8 7.9-3.6zm-28.801-50.6c-1.399-3.5-.1-7.6-.3-11.3 1.601-5.101 2.101-10.5 4-15.601 4.8-11.3 10.7-22.399 19.3-31.3 4-3.3 7.4-7.3 12-9.8 3.4-1.8 6.7-3.8 10.2-5.4 6.5-1.899 12.8-4.899 19.601-4.899 6.199-1.5 12.6-.7 18.899-.601 16.5 2.301 33.101 9.4 43.8 22.5 1.101 2.601-2.6 2.801-4.1 3.801-6.5 3.6-13.8 5.399-20.3 9.1-2.9.5-5.4 2.3-8.2 3.2-20.7 9-41.8 16.899-62.3 26.3-10.999 4.3-21.899 8.9-32.6 14zM805.699 183.3c-21.899-.2-43.8 0-65.699-.1-1.601.2-3.5-.5-4.801.7.2 47 0 94.1.101 141.1-.101 1.7.3 3.4-.4 5-2-.3-3-2.2-4.5-3.3-10.1-8.7-21.399-16.1-34-20.4-8.5-3.3-17.399-5-26.399-6.6-10.2-.2-20.5-.5-30.801.1-1.1.3-2.1.6-3.199.7-22.9 3.2-44.301 13.9-61.9 28.6-9.8 9.2-19.6 18.8-26.5 30.4-8.1 11.5-13.3 24.7-18.3 37.7-2.3 8.2-4.601 16.3-5.601 24.7-1.9 12.9-1.1 26.1-.9 39.1.5 3.4 1.6 6.6 1.7 10 1.8 11 5 21.8 9.399 32.1 3.7 9.9 9.7 18.9 15.2 27.9 3.9 5 7.7 10.2 12.4 14.6 7 6.9 13.899 14.4 22.699 19.2 10.4 7.9 22.7 12.601 34.7 17.2 4.4.8 8.5 3.3 13 3.4 3.8.3 7.3 2.1 11.101 1.899 2-.2 3.8 1.2 5.899 1 9.7.3 19.5.3 29.2 0 1.6 0 3.2-.7 4.9-.8 6.699.1 12.899-2.5 19.399-3.4 8.5-3.1 17.601-5.1 25.5-9.699 11.7-5.4 22.3-13 31.8-21.601 12-10.399 21.7-23.399 28.9-37.6 3.1-6.3 6.6-12.4 8.6-19.2 3.801-9.4 5.5-19.4 6.801-29.3 2.199-8.7 1.5-17.8 1.699-26.8.002-85.499.002-170.999.002-256.599zM734.6 454.1c-.6 10.601-4.6 20.7-9.3 30.2-7.9 14.9-21.2 26.3-36.3 33.5-2.301 1.2-5.301 1.101-6.9 3.3-2.8 0-5.6.101-8.3 1.101-8.601.2-17.5 1-25.9-1.4-3.6-1.7-7.6-2.399-11.2-4.3-4.5-2.5-9.6-4.2-13.3-8-7-4.9-12.399-11.6-17.3-18.5-3.9-6.7-7.8-13.6-9.6-21.2-2-4-1.801-8.5-2.9-12.7-.3-10.699-.9-21.699 1.6-32.1 1.101-3.3 1.801-6.8 3-10.1 2.9-5.301 4.7-11.2 8.5-16 2-4.2 5.5-7.301 8.301-10.9 7.5-8.6 17.8-14.1 28.199-18.4 3.9-.899 7.7-2.899 11.801-2.899 8.3-2.101 16.899-.4 25.1 1.1 10.8 3.9 21.5 9.3 29.9 17.3 3.1 2.9 5.399 6.5 8.5 9.4C731.3 410.7 737.199 432.8 734.6 454.1zM1204.4 547.3h26.2c.1 2 .1 4 0 6-3 .4-6-.1-8.9.3-.399 9 0 17.9-.199 26.9-2.7-.2-5.4-.2-8-.1-.301-7.101-.2-14.301-.101-21.4 0-1.9.4-4.1-1.3-5.4-2.6-.399-5.2.101-7.8-.3-.101-2-.101-4 .1-6zM1235.4 547.4c3.7-.101 7.4-.301 11.101.199-.2 2.9 2.199 4.9 2.899 7.601 1 3.399 2.5 6.6 3.5 10 .8 1.5 2.2 2.8 1.7 4.7 2-7.801 5.1-15.2 8.2-22.5 3.5-.101 7.1-.2 10.7 0 .199 10.699 0 21.6 0 32.3-2.4.2-4.801.2-7.301 0 .101-7.5 0-15 .2-22.4-.899.8-1.8 1.5-2.5 2.5-1.3 6.8-4.8 13-6.5 19.8-2 .301-3.899.301-5.899.101-.601-3.8-3.301-6.9-3.301-10.8-2.699-3.301-2.8-8-4.899-11.7-1.4 2.7-.3 5.899-.601 8.8-.399 4.7.5 9.5-.399 14.2-2.4 0-5.101.8-7-.9.3-10.601 0-21.201.1-31.901z"
+                                fill="currentcolor" stroke="#df4723" stroke-width=".094" />
+                        </svg>
+                    </a>
+                    <a href="#" class="flex items-center lg:justify-center">
+                        <svg class="h-9 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                            viewBox="0.4 16.099999999999994 651.2000000000002 119.89999999999998"
+                            xmlns="http://www.w3.org/2000/svg" width="2500" height="504">
+                            <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="-54.75" x2="883.12" y1="46.295"
+                                y2="107.528">
+                                <stop offset="0" stop-color="#fff" />
+                                <stop offset=".149" stop-color="#fafafa" />
+                                <stop offset=".327" stop-color="#ebebeb" />
+                                <stop offset=".521" stop-color="#d3d3d3" />
+                                <stop offset=".726" stop-color="#b1b1b1" />
+                                <stop offset=".937" stop-color="#868686" />
+                                <stop offset="1" stop-color="#787878" />
+                            </linearGradient>
+                            <switch>
+                                <g>
+                                    <path
+                                        d="M485.2 19.6l-.5-.7h-9v-.1h-24.1v84h56.1l16-25.6zm-9.5 58.3V49.3l19 28.6zM.4 18.8v84h25.8v-84zm421.6-.1v84h25.8v-84zM81.5 80.1l16.5-22-32.7-42-8.9 9.7V19H31.2v84h25.2V89.1L87.1 129l16.4-18.9zM63.3 55.3l.3-.3 2.4 3.1h-5.4zm70.1-38.7L86.8 80.2l16 22.6h61.6l15.3-22.7zm13.7 60.6h-28.3L133.9 59zM218 18.8v20.5l-18.4-20.4h-18.4v.1H163l18.2 19.1v64.8h25.2V64.3L218 76.9v28.2l25.2 26.6V18.8zm408.5.1v20.3L608.1 19h-36.7l18.1 19v64.8h25.2V64.2l11.7 12.7V105l25.2 26.7V18.9zm-307.2-1.8l-12 16.1L294.6 19l-37.3-.1 15.2 17.4v66.6h24.3V59.6l10.1 12.5 9.9-11.6v47.3l25.8 28.2V42.5zm71.3 1.7l-18.8 25.4-8.9-10.2-16 19.7 9.7 11.2-13.9 18.8 16.2 20 14.3-19.4 15.8 18.4h28.3V18.8zm1.8 39.4V68l-2-2.3-1.8-2.2 1.8-2.7zm178.9-15V18.9h-47l.1 65 14.1 18.8h32.7V77.8h-23.4l.1-6.8h23.3V48h-23.3v-4.8z"
+                                        fill="currentcolor" />
+                                    <path
+                                        d="M487.4 32.3l-5.4-8.1h-11.4V24h-13.8v73.6l48.1.2 12.6-20.6zM470.5 83V32.2c11.3 17 22.6 34 34 50.9h-34zm-77.4-58.9L372 52.6l-9-10.5-9.3 11.6 9.4 11.1-13.9 18.8 9.3 11.6L372.8 76l18.6 21.7h20.8V24.1zm4.4 57.9l-15.6-18.2 15.6-21.3zM133.6 25.8l-.4.5-40 53.8 12.2 17.4h56.2l11.7-17.3zm-25.2 56.5l24.4-32.7.5-.7 24 33.3h-48.9zm523-58.4v28.9L605.6 24l-22.2-.1 11.3 12.2v61.5h14.9V50.8l22 24v28.1l14.9 15.7V23.9zM566 38.1v-14h-36.2l-.2 58.1L541 97.5h24.8V83h-23.1l-.2-17.3h23.3V53.2h-23.3l.1-15.1zM427.3 23.9v73.5h15.4V23.9zm-204.1.1v28.9l-25.9-28.8h-11v.1H175L186.3 36v61.6h14.9V50.9l22 24V103l14.9 15.7V24zm96.5 1.2l-12.2 16.2-15.3-17.3h-23.5l9 10.1v63.4h13.9V45.2L306.9 64l14.9-17.8v59.5l15.5 16.9V44.4zM74.8 80l16.5-21.8L65 23.9l-13.8 15V24H36.3v73.6h14.9V73.7l36.2 47.1 9.4-11.1zM51.2 61.9l12.5-13.7 11 13.7zM5.6 24v73.6h15.5V24z"
+                                        fill="currentcolor" />
+                                </g>
+                            </switch>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- End block -->
+        <!-- Start block -->
+        <section class="bg-gray-50 dark:bg-gray-800">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6">
+                <!-- Row -->
+                <div class="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
+                    <div class="text-gray-500 sm:text-lg dark:text-gray-400">
+                        <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Optimiza la
+                            gestión de tu restaurante</h2>
+                        <p class="mb-8 font-light lg:text-xl">Administra pedidos, inventario y reportes en tiempo real sin
+                            complicaciones. Nuestra plataforma te permite automatizar procesos y mejorar la eficiencia
+                            operativa.</p>
+                        <!-- List -->
+                        <ul role="list" class="pt-8 space-y-5 border-t border-gray-200 my-7 dark:border-gray-700">
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Gestión de
+                                    pedidos en línea</span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Control de
+                                    inventario inteligente</span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Reportes
+                                    detallados y estadísticas clavet</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex" src="../static/images/feature-1.png"
+                        alt="dashboard feature image">
+                </div>
+                <!-- Row -->
+                <div class="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
+                    <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex" src="../static/images/feature-2.png"
+                        alt="feature image 2">
+                    <div class="text-gray-500 sm:text-lg dark:text-gray-400">
+                        <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Optimiza la
+                            gestión y mejora la experiencia de tus clientes</h2>
+                        <p class="mb-8 font-light lg:text-xl">Analiza tus ventas, controla los pedidos y mantén tu
+                            inventario al día con reportes en tiempo real. Nuestro sistema te ayuda a tomar decisiones
+                            estratégicas basadas en datos.</p>
+                        <!-- List -->
+                        <ul role="list" class="pt-8 space-y-5 border-t border-gray-200 my-7 dark:border-gray-700">
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Pedidos en
+                                    tiempo real</span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span
+                                    class="text-base font-medium leading-tight text-gray-900 dark:text-white">Notificaciones
+                                    automáticas para el equipo y clientes</span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Análisis de
+                                    ventas y tendencias de consumo</span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Gestión de
+                                    inventario optimizada</span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Icon -->
+                                <svg class="flex-shrink-0 w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-base font-medium leading-tight text-gray-900 dark:text-white">Reportes
+                                    visuales para mejorar la toma de decisiones</span>
+                            </li>
+                        </ul>
+                        <p class="font-light lg:text-xl">Descubre qué platos son los más populares y ajusta tu estrategia de
+                            ventas.
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End block -->
+        <!-- Start block -->
+        <section class="bg-white dark:bg-gray-900">
+            <div
+                class="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
+                <div class="col-span-2 mb-8">
+                    <p class="text-lg font-medium text-purple-600 dark:text-purple-500">Gestión confiable y eficiente</p>
+                    <h2 class="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                        Confiado por cientos de clientes y equipos de trabajo</h2>
+                    <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Nuestra plataforma garantiza un
+                        servicio seguro y eficiente, optimizando la operación de tu restaurante.</p>
+                    <div class="pt-6 mt-6 space-y-4 border-t border-gray-200 dark:border-gray-700">
+                        <div>
+                            <a href="#"
+                                class="inline-flex items-center text-base font-medium text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700">
+                                Explora la guía de legalidad
+                                <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="#"
+                                class="inline-flex items-center text-base font-medium text-purple-600 hover:text-purple-800 dark:text-purple-500 dark:hover:text-purple-700">
+                                Visita el Centro de Confianza
+                                <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
+                    <div>
+                        <svg class="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M2 5a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm14 1a1 1 0 11-2 0 1 1 0 012 0zM2 13a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2zm14 1a1 1 0 11-2 0 1 1 0 012 0z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <h3 class="mb-2 text-2xl font-bold dark:text-white">99.99% de disponibilidad</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Mantén tu negocio funcionando sin
+                            interrupciones.
+                        </p>
+                    </div>
+                    <div>
+                        <svg class="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z">
+                            </path>
+                        </svg>
+                        <h3 class="mb-2 text-2xl font-bold dark:text-white">500+ clientes satisfechos</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Confían en Milonga para gestionar sus pedidos
+                            y operaciones.</p>
+                    </div>
+                    <div>
+                        <svg class="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <h3 class="mb-2 text-2xl font-bold dark:text-white">50+ restaurantes registrados</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Usan nuestro sistema para mejorar su servicio
+                            y optimizar costos.</p>
+                    </div>
+                    <div>
+                        <svg class="w-10 h-10 mb-2 text-purple-600 md:w-12 md:h-12 dark:text-purple-500" fill="currentColor"
+                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
+                            </path>
+                        </svg>
+                        <h3 class="mb-2 text-2xl font-bold dark:text-white">10,000+ transacciones diarias</h3>
+                        <p class="font-light text-gray-500 dark:text-gray-400">Gestión eficiente de pedidos y pagos en
+                            tiempo real.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End block -->
+        <!-- Start block -->
+        <section class="bg-gray-50 dark:bg-gray-800">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-24 lg:px-6">
+                <figure class="max-w-screen-md mx-auto">
+                    <svg class="h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 27" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z"
+                            fill="currentColor" />
+                    </svg>
+                    <blockquote>
+                        <p class="text-xl font-medium text-gray-900 md:text-2xl dark:text-white">"Gracias a <b>Milonga</b>,
+                            ahora
+                            podemos atender más rápido y sin errores. El sistema es intuitivo y nos permite gestionar los
+                            pedidos en tiempo real."</p>
+                    </blockquote>
+                    <figcaption class="flex items-center justify-center mt-6 space-x-3">
+                        <img class="w-6 h-6 rounded-full" src="../static/images/Ceo.png" alt="profile picture">
+                        <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+                            <div class="pr-3 font-medium text-gray-900 dark:text-white">Julian Hinestroza</div>
+                            <div class="pl-3 text-sm font-light text-gray-500 dark:text-gray-400">CEO at Two Brokens</div>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </section>
+        <!-- End block -->
+        <!-- Start block -->
+        <section class="bg-white dark:bg-gray-900">
+            <div class="max-w-screen-xl px-4 pb-8 mx-auto lg:pb-24 lg:px-6 ">
+                <h2
+                    class="mb-6 text-3xl font-extrabold tracking-tight text-center text-gray-900 lg:mb-8 lg:text-3xl dark:text-white">
+                    Preguntas Frecuentes</h2>
+                <div class="max-w-screen-md mx-auto">
+                    <div id="accordion-flush" data-accordion="collapse"
+                        data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+                        data-inactive-classes="text-gray-500 dark:text-gray-400">
+                        <h3 id="accordion-flush-heading-1">
+                            <button type="button"
+                                class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-900 bg-white border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                                data-accordion-target="#accordion-flush-body-1" aria-expanded="true"
+                                aria-controls="accordion-flush-body-1">
+                                <span>¿Cómo puedo registrar un nuevo pedido en Milonga?</span>
+                                <svg data-accordion-icon="" class="w-6 h-6 rotate-180 shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </h3>
+                        <div id="accordion-flush-body-1" class="" aria-labelledby="accordion-flush-heading-1">
+                            <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                                <p class="mb-2 text-gray-500 dark:text-gray-400">Para registrar un pedido, dirígete a la
+                                    sección "Pedidos" en el menú superior. Allí puedes agregar nuevos pedidos seleccionando
+                                    los productos del menú, asignando una mesa o cliente, y eligiendo el método de pago.</p>
+                            </div>
+                        </div>
+                        <h3 id="accordion-flush-heading-2">
+                            <button type="button"
+                                class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+                                data-accordion-target="#accordion-flush-body-2" aria-expanded="false"
+                                aria-controls="accordion-flush-body-2">
+                                <span>¿Milonga permite controlar el inventario en tiempo real?</span>
+                                <svg data-accordion-icon="" class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </h3>
+                        <div id="accordion-flush-body-2" class="hidden" aria-labelledby="accordion-flush-heading-2">
+                            <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                                <p class="mb-2 text-gray-500 dark:text-gray-400">Sí, nuestro sistema actualiza
+                                    automáticamente el inventario cada vez que se registra un pedido. Además, puedes ver el
+                                    estado de los productos en la sección "Inventario" y recibir alertas cuando los insumos
+                                    estén por agotarse.
+
+                                </p>
+                            </div>
+                        </div>
+                        <h3 id="accordion-flush-heading-3">
+                            <button type="button"
+                                class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+                                data-accordion-target="#accordion-flush-body-3" aria-expanded="false"
+                                aria-controls="accordion-flush-body-3">
+                                <span>¿Puedo generar reportes de ventas y stock desde Milonga?</span>
+                                <svg data-accordion-icon="" class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </h3>
+                        <div id="accordion-flush-body-3" class="hidden" aria-labelledby="accordion-flush-heading-3">
+                            <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                                <p class="mb-2 text-gray-500 dark:text-gray-400">Sí, en la sección de reportes puedes
+                                    visualizar estadísticas de ventas, consumo de productos y niveles de inventario. También
+                                    puedes exportar estos datos en formato Excel o PDF para análisis detallado.</p>
+                            </div>
+                        </div>
+                        <h3 id="accordion-flush-heading-4">
+                            <button type="button"
+                                class="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400"
+                                data-accordion-target="#accordion-flush-body-4" aria-expanded="false"
+                                aria-controls="accordion-flush-body-4">
+                                <span>¿Milonga se puede integrar con otros sistemas de pago o facturación?</span>
+                                <svg data-accordion-icon="" class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </h3>
+                        <div id="accordion-flush-body-4" class="hidden" aria-labelledby="accordion-flush-heading-4">
+                            <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+                                <p class="mb-2 text-gray-500 dark:text-gray-400">Sí, nuestra plataforma permite
+                                    integraciones con sistemas de facturación electrónica y pasarelas de pago como PayU o
+                                    MercadoPago. Si necesitas una integración personalizada, contáctanos para más detalles.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End block -->
+        <!-- Start block -->
+        <section class="bg-gray-50 dark:bg-gray-800">
+            <div class="max-w-screen-xl px-4 py-8 mx-auto lg:py-16 lg:px-6">
+                <div class="max-w-screen-sm mx-auto text-center">
+                    <h2 class="mb-4 text-3xl font-extrabold leading-tight tracking-tight text-gray-900 dark:text-white">
+                        Empieza tu prueba gratuita hoy</h2>
+                    <p class="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">Prueba Milonga durante 30 días.
+                        No se requiere tarjeta de crédito.
+                    </p>
+                    <a href="#"
+                        class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none dark:focus:ring-purple-800">
+                        Comenzar prueba gratuita</a>
+                </div>
+            </div>
+        </section>
+        <!-- End block -->
+        <footer class="bg-white dark:bg-gray-800">
+            <div class="max-w-screen-xl p-4 py-6 mx-auto lg:py-16 md:p-8 lg:p-10">
+                <div class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5">
+                    <div>
+                        <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Recursos</h3>
+                        <ul class="text-gray-500 dark:text-gray-400">
+                            <li class="mb-4">
+                                <a href="#" class=" hover:underline">Guía de uso</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Blog</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Casos de éxito</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Novedades</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Soporte</h3>
+                        <ul class="text-gray-500 dark:text-gray-400">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Centro de ayuda</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">FAQ</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Contactar soporte</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Estado del servicio</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Contacto</h3>
+                        <ul class="text-gray-500 dark:text-gray-400">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">soporte@milonga.com</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">+57 300 123 4567</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Pereira, Colombia</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h3>
+                        <ul class="text-gray-500 dark:text-gray-400">
+                            <li class="mb-4">
+                                <a href="#" class=" hover:underline">Términos del servicio</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Política de privacidad</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Política de cookies</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Licencias</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Descargar</h3>
+                        <ul class="text-gray-500 dark:text-gray-400">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">iOS</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Android</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Windows</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">MacOS</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
+                <div class="text-center">
+                    <a href="#"
+                        class="flex items-center justify-center mb-5 text-2xl font-semibold text-gray-900 dark:text-white">
+                        <img src="../static/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
+                        Milonga
+                    </a>
+                    <span class="block text-sm text-center text-gray-500 dark:text-gray-400">© 2024-2025 Milonga™. Todos los
+                        derechos reservados. Creado con <a href="https://flowbite.com"
+                            class="text-purple-600 hover:underline dark:text-purple-500">Flowbite</a> and <a
+                            href="https://tailwindcss.com"
+                            class="text-purple-600 hover:underline dark:text-purple-500">Tailwind CSS</a>
+                    </span>
+                    <ul class="flex justify-center mt-5 space-x-5">
+                        <li>
+                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </main>
+    
+    
+    
+
+
+    {% elif form_type == 'pedidos' %}
+    <header class="fixed w-full top-10 z-45">
+        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+            <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+                <a href="#" class="flex items-center">
+
+                    <img src="/static/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
+                    <span class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Milonga</span>
+                </a>
+                <div class="flex items-center lg:order-2">
+                    <div class="hidden mt-2 mr-4 sm:inline-block">
+                    </div>
+                    <button data-collapse-toggle="mobile-menu-2" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Abrir Menu Principal</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <li>
+                            <a href="{{ url_for('dashboard') }}"
+                                class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
+                                aria-current="page">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('pedidos') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Pedidos</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('inventario') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Inventario</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Clientes</a>
+                        </li>
+                        
+                    </ul>
+                    <button onclick="logout()"
+                            class="p-2 lg:ml-8 ml-4 rounded-full hover:bg-purple-700 transition-colors group"
+                            title="Cerrar sesión" 
+                            aria-label="Cerrar sesión">
+                        <img src="../static/images/logout.png" alt="" 
+                            class="w-8 h-8 group-hover:opacity-90 transform hover:scale-105 transition-all">
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="pt-20 px-4">
+        <!-- Formulario de pedidos -->
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-8 dark:bg-gray-800">
+                <!-- Encabezado -->
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Gestión de Pedidos
+                    </h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-300">
+                        Bienvenido, {{ session.usuario.nombre }} {{ session.usuario.apellido }}
+                    </p>
+                </div>
+    
+                <form action="{{ url_for('crear_pedido') }}" method="post" class="space-y-8">
+                    <div class="bg-white border border-purple-100 p-6 rounded-xl dark:bg-gray-700 dark:border-gray-600">
+                        <h2 class="text-xl font-semibold text-purple-800 mb-6 dark:text-purple-200">
+                            <i class="fas fa-clipboard-list mr-2"></i>Nuevo Pedido
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Cliente -->
+                            <div class="relative">
+                                <select id="cliente_id" name="cliente_id" required
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                    <option value="" disabled selected>Seleccione un cliente</option>
+                                    {% for cliente in clientes %}
+                                    <option value="{{ cliente[0] }}">{{ cliente[1] }} {{ cliente[2] }}</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <!-- Icono de usuario -->
+                                </span>
+                            </div>
+    
+                            <!-- Bebida -->
+                            <div class="relative">
+                                <select id="bebida_id" name="bebida_id"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                    <option value="" selected>Seleccione bebida</option>
+                                    {% for bebida in bebidas %}
+                                    <option value="{{ bebida[0] }}">{{ bebida[1] }} (Stock: {{ bebida[2] }})</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <!-- Icono de bebida -->
+                                </span>
+                            </div>
+    
+                            <!-- Comida -->
+                            <div class="relative">
+                                <select id="comida_id" name="comida_id"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                    <option value="" selected>Seleccione comida</option>
+                                    {% for comida in comidas %}
+                                    <option value="{{ comida[0] }}">{{ comida[1] }} (Stock: {{ comida[2] }})</option>
+                                    {% endfor %}
+                                </select>
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <!-- Icono de comida -->
+                                </span>
+                            </div>
+    
+                            <!-- Cantidad Bebida -->
+                            <div class="relative">
+                                <input type="number" id="cantidad_bebida" name="cantidad_bebida" min="0" 
+                                    placeholder="Cantidad de bebida"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <!-- Icono de cantidad -->
+                                </span>
+                            </div>
+    
+                            <!-- Cantidad Comida -->
+                            <div class="relative">
+                                <input type="number" id="cantidad_comida" name="cantidad_comida" min="0" 
+                                    placeholder="Cantidad de comida"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <!-- Icono de cantidad -->
+                                </span>
+                            </div>
+                        </div>
+    
+                        <!-- Botón de envío -->
+                        <button type="submit"
+                            class="mt-6 w-full py-3 px-6 bg-purple-600 hover:bg-purple-700 text-white 
+                                    font-semibold rounded-lg transition-colors flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Registrar Pedido
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+        <!-- Lista de pedidos -->
+        <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-800">Registro de Pedidos</h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bebida</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cant.</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">P. Bebida</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comida</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cant.</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">P. Comida</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% if pedidos %}
+                            {% for pedido in pedidos %}
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 text-sm text-gray-500">#{{ pedido[0] }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ pedido[1] }} {{ pedido[2] }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500">{{ pedido[3] or 'N/A' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 text-center">{{ pedido[5] }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500">
+                                    {% if pedido[9] %}${{ "%.2f"|format(pedido[9]) }}{% else %}N/A{% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-500">{{ pedido[4] or 'N/A' }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 text-center">{{ pedido[6] }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500">
+                                    {% if pedido[10] %}${{ "%.2f"|format(pedido[10]) }}{% else %}N/A{% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-sm font-semibold text-purple-600">${{ "%.2f"|format(pedido[11]) }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500">{{ pedido[7].strftime('%d/%m/%Y %H:%M') }}</td>
+                                <td class="px-6 py-4">
+                                    {% if pedido[8] == 'pendiente' %}
+                                    <form action="{{ url_for('actualizar_estado', pedido_id=pedido[0]) }}" method="post">
+                                        <button type="submit" 
+                                                class="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors">
+                                            Marcar como Completado
+                                        </button>
+                                    </form>
+                                    {% else %}
+                                    <span class="text-gray-400">Completado</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="11" class="px-6 py-4 text-center text-sm text-gray-500">
+                                    No se encontraron pedidos registrados
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+
+    
+    <!--Formulario inventario-->
+    {% elif form_type == 'inventario' %}
+    <header class="fixed w-full top-10 z-45">
+        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+            <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+                <a href="#" class="flex items-center">
+
+                    <img src="/static/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
+                    <span class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Milonga</span>
+                </a>
+                <div class="flex items-center lg:order-2">
+                    <div class="hidden mt-2 mr-4 sm:inline-block">
+                    </div>
+                    <button data-collapse-toggle="mobile-menu-2" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Abrir Menu Principal</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <li>
+                            <a href="{{ url_for('dashboard') }}"
+                                class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
+                                aria-current="page">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('pedidos') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Pedidos</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('inventario') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Inventario</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Clientes</a>
+                        </li>
+                        
+                    </ul>
+                    <button onclick="logout()"
+                            class="p-2 lg:ml-8 ml-4 rounded-full hover:bg-purple-700 transition-colors group"
+                            title="Cerrar sesión" 
+                            aria-label="Cerrar sesión">
+                        <img src="../static/images/logout.png" alt="" 
+                            class="w-8 h-8 group-hover:opacity-90 transform hover:scale-105 transition-all">
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Contenido principal -->
+    <main class="pt-20 px-4">
+        <h1 class="text-2xl font-bold mb-4">Inventario</h1>
+        
+        <!-- Formulario para agregar productos al inventario -->
+        <form action="{{ url_for('inventario') }}" method="post" class="mb-8">
+            <div class="max-w-2xl mx-auto">
+                <!-- Tarjeta contenedora -->
+                <div class="bg-white rounded-xl shadow-lg p-8 dark:bg-gray-800">
+                    <!-- Encabezado -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                            Gestión de Inventario
+                        </h1>
+                        <p class="text-lg text-gray-600 dark:text-gray-300">
+                            Bienvenido, {{ session.usuario.nombre }} {{ session.usuario.apellido }}
+                        </p>
+                    </div>
+            
+                    <!-- Formulario de Inventario -->
+                    <div class="bg-white border border-purple-100 p-6 rounded-xl dark:bg-gray-700 dark:border-gray-600">
+                        <h2 class="text-xl font-semibold text-purple-800 mb-4 dark:text-purple-200">
+                            <i class="fas fa-boxes mr-2"></i>Registrar Nuevo Producto
+                        </h2>
+                        
+                        <form action="{{ url_for('inventario') }}" method="post" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Campo Nombre -->
+                                <div class="relative">
+                                    <input type="text" id="nombre" name="nombre" required placeholder="Nombre del producto"
+                                        class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                    <span class="absolute left-3 top-3 text-purple-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                        </svg>
+                                    </span>
+                                </div>
+            
+                                <!-- Campo Categoría -->
+                                <div class="relative">
+                                    <select id="categoria" name="categoria" required
+                                        class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                        <option value="">Seleccione categoría</option>
+                                        <option value="comida">Comida</option>
+                                        <option value="bebida">Bebida</option>
+                                    </select>
+                                    <span class="absolute left-3 top-3 text-purple-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                                        </svg>
+                                    </span>
+                                </div>
+            
+                                <!-- Campo Stock -->
+                                <div class="relative">
+                                    <input type="number" id="stock" name="stock" required placeholder="Cantidad en stock"
+                                        class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                            focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                            dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                    <span class="absolute left-3 top-3 text-purple-400">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="relative">
+                                        <input type="number" step="0.01" id="precio" name="precio" required placeholder="Precio unitario"
+                                            class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                                focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                                dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                        <span class="absolute left-3 top-3 text-purple-400">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <!-- Botón de envío -->
+                            <button type="submit"
+                                class="mt-2 w-full py-3 px-6 bg-purple-600 hover:bg-purple-700 text-white 
+                                    font-semibold rounded-lg transition-colors flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Agregar al Inventario
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        
+        <!-- Tabla de inventario -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <h2 class="text-lg font-semibold text-gray-700 mb-6">Inventario de Productos</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 text-gray-600 border-b">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">ID</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Nombre</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Categoría</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Stock</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Fecha Ingreso</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio Unitario</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        {% if inventario %}
+                            {% for item in inventario %}
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-4 py-3 text-sm text-gray-600">{{ item[0] }}</td>
+                                <td class="px-4 py-3 text-sm font-medium text-gray-700">{{ item[1] }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">{{ item[2] }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">{{ item[3] }}</span>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-gray-500">
+                                    {% if item[4] %}
+                                        {{ item[4].strftime('%d/%m/%Y %H:%M') }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-500">
+                                    ${{ "%.2f"|format(item[5]|float) }}
+                                </td>
+                                <td class="px-4 py-3">
+                                    <button class="text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-100"
+                                            onclick="editarStock('{{ item[0] }}', '{{ item[3] }}')"
+                                            title="Editar">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="px-4 py-3 text-center text-gray-500 text-sm">No hay productos registrados</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Modal Editar Stock -->
+        <div id="modalEditarStock" class="hidden fixed inset-0 z-50 bg-black bg-opacity-30">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white rounded-xl w-full max-w-md">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-700">Actualizar Stock</h3>
+                    </div>
+                    
+                    <form id="formEditarStock" method="POST" class="p-6 space-y-6">
+                        <input type="hidden" id="productoId" name="productoId">
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad disponible</label>
+                            <input type="number" id="nuevoStock" name="nuevoStock" required
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all">
+                        </div>
+                        
+                        <div class="flex justify-end space-x-3">
+                            <button type="button" onclick="cerrarModal()"
+                                    class="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg border border-gray-300 transition-colors">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                    class="px-4 py-2 bg-purple-600 text-white text-sm font-medium hover:bg-purple-700 rounded-lg transition-colors">
+                                Actualizar Stock
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- Página de administración -->
+    {% elif form_type == 'admin' %}
+    <header class="fixed w-full top-10 z-45">
+        <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
+            <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+                <a href="#" class="flex items-center">
+
+                    <img src="/static/images/logo.svg" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
+                    <span class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Milonga</span>
+                </a>
+                <div class="flex items-center lg:order-2">
+                    <div class="hidden mt-2 mr-4 sm:inline-block">
+                    </div>
+                    <button data-collapse-toggle="mobile-menu-2" type="button"
+                        class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="mobile-menu-2" aria-expanded="false">
+                        <span class="sr-only">Abrir Menu Principal</span>
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
+                    <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+                        <li>
+                            <a href="{{ url_for('dashboard') }}"
+                                class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
+                                aria-current="page">Inicio</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('pedidos') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Pedidos</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('inventario') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Inventario</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('admin') }}"
+                                class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Clientes</a>
+                        </li>
+                    
+                    </ul>
+                    <button onclick="logout()"
+                            class="p-2 lg:ml-8 ml-4 rounded-full hover:bg-purple-700 transition-colors group"
+                            title="Cerrar sesión" 
+                            aria-label="Cerrar sesión">
+                        <img src="../static/images/logout.png" alt="" 
+                            class="w-8 h-8 group-hover:opacity-90 transform hover:scale-105 transition-all">
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-28 pb-8 px-4"> <!-- Añade espacio para el header fijo -->
+        <div class="max-w-2xl mx-auto"> <!-- Contenedor más ancho -->
+            <!-- Tarjeta contenedora -->
+            <div class="bg-white rounded-xl shadow-lg p-8 dark:bg-gray-800">
+                <!-- Encabezado -->
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Administración de Clientes
+                    </h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-300">
+                        Bienvenido, {{ session.usuario.nombre }} {{ session.usuario.apellido }}
+                    </p>
+                </div>
+    
+                <!-- Contenedor de formularios -->
+                <div class="space-y-8">
+                    <!-- Sección de búsqueda -->
+                    <div class="bg-purple-50 p-6 rounded-xl dark:bg-gray-700">
+                        <h2 class="text-xl font-semibold text-purple-800 mb-4 dark:text-purple-200">
+                            <i class="fas fa-search mr-2"></i>Buscar Cliente
+                        </h2>
+                        <div class="flex gap-4">
+                            <div class="flex-1 relative">
+                                <input type="text" id="cedula" placeholder="Cédula del cliente"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                        focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                        dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            <button onclick="buscarCliente()"
+                                class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold 
+                                    rounded-lg transition-colors flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- Sección de registro -->
+                    <div class="bg-white border border-purple-100 p-6 rounded-xl dark:bg-gray-700 dark:border-gray-600">
+                        <h2 class="text-xl font-semibold text-purple-800 mb-4 dark:text-purple-200">
+                            <i class="fas fa-user-plus mr-2"></i>Registrar Nuevo Cliente
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="relative">
+                                <input type="text" id="nombre" placeholder="Nombre"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                        focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                        dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                            
+                            <div class="relative">
+                                <input type="text" id="apellido" placeholder="Apellido"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                        focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                        dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+    
+                            <div class="relative md:col-span-2">
+                                <input type="text" id="cedulaRegistro" placeholder="Cédula"
+                                    class="w-full pl-10 pr-4 py-3 border border-purple-200 rounded-lg 
+                                        focus:ring-2 focus:ring-purple-500 focus:border-purple-500
+                                        dark:border-gray-600 dark:bg-gray-600 dark:text-white">
+                                <span class="absolute left-3 top-3 text-purple-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                            d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+    
+                        <button onclick="registrarCliente()"
+                                class="mt-6 w-full py-3 px-6 bg-purple-600 hover:bg-purple-700 text-white 
+                                    font-semibold rounded-lg transition-colors flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                    d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Registrar Cliente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6 dark:bg-gray-800">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-purple-800 dark:text-purple-200">
+                    <i class="fas fa-users mr-2"></i>Clientes Registrados
+                </h2>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm dark:bg-gray-700 dark:text-purple-300">
+                    Total: {{ total_clientes }}
+                </span>
+            </div>
+        
+            <div class="overflow-x-auto rounded-lg border border-purple-50 dark:border-gray-600">
+                <table class="w-full">
+                    <thead class="bg-purple-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Nombre</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Apellido</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Cédula</th>
+                            <th class="px-6 py-4 text-left text-sm font-semibold text-purple-800 dark:text-purple-200">Estado</th>
+                            <th class="px-6 py-4 text-center text-sm font-semibold text-purple-800 dark:text-purple-200">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-purple-100 dark:divide-gray-600">
+                        {% for cliente in clientes %}
+                        <tr class="hover:bg-purple-50 dark:hover:bg-gray-700 transition-colors">
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ cliente.nombre }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ cliente.apellido }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">{{ cliente.cedula }}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs rounded-full {{ 'bg-green-100 text-green-800' if cliente.activo else 'bg-red-100 text-red-800' }} dark:bg-opacity-20">
+                                    {{ 'Activo' if cliente.activo else 'Inactivo' }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <div class="flex justify-center space-x-3">
+                                    <button class="text-purple-600 hover:text-purple-800 dark:text-purple-300 dark:hover:text-purple-100"
+                                            onclick="editarCliente('{{ cliente.id }}')"
+                                            title="Editar">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                        </svg>
+                                    </button>
+                                    <button class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                                            onclick="eliminarCliente('{{ cliente.id }}')"
+                                            title="Eliminar">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        
+            <!-- Paginación -->
+            <div class="mt-6 flex justify-between items-center px-4">
+                <span class="text-sm text-gray-600 dark:text-gray-400">
+                    Mostrando {{ clientes|length }} de {{ total_clientes }}
+                </span>
+                <div class="space-x-2">
+                    <button class="px-4 py-2 text-sm bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-purple-300">
+                        Anterior
+                    </button>
+                    <button class="px-4 py-2 text-sm bg-purple-100 hover:bg-purple-200 text-purple-800 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-purple-300">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+        
+
+        <!-- Mensajes -->
+        <div id="message" class="mt-6 text-center text-gray-600"></div>
+
+    </div>
+    <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50">
+        <div class="flex items-center justify-center h-full">
+            <div class="bg-white p-6 rounded-lg w-96">
+                <h3 class="text-2xl font-bold mb-4">Editar Cliente</h3>
+                <input type="hidden" id="editId">
+                
+                <!-- Campos del formulario -->
+                <input type="text" id="editNombre" 
+                       class="w-full mb-2 p-2 border rounded" placeholder="Nombre">
+                
+                <input type="text" id="editApellido" 
+                       class="w-full mb-2 p-2 border rounded" placeholder="Apellido">
+                
+                <input type="text" id="editCedula" 
+                       class="w-full mb-4 p-2 border rounded" placeholder="Cédula">
+                
+                <!-- Checkbox Activo -->
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="editActivo" 
+                               class="form-checkbox h-5 w-5 text-purple-600">
+                        <span class="ml-2 text-gray-700">Activo</span>
+                    </label>
+                </div>
+                
+                <!-- Botones -->
+                <button onclick="guardarEdicion()" 
+                        class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+                    Guardar
+                </button>
+                <button onclick="document.getElementById('editModal').classList.add('hidden')" 
+                        class="ml-2 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>  
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const popup = document.getElementById('popup-alert');
+            const closeButton = document.getElementById('close-popup');
+
+            // Show the popup
+            popup.classList.remove('hidden');
+
+            // Close the popup when the X button is clicked
+            closeButton.addEventListener('click', () => {
+                popup.classList.add('hidden');
+            });
+        });
+        // Función para buscar cliente
+        async function buscarCliente() {
+            const cedula = document.getElementById("cedula").value;
+            try {
+                const response = await fetch("/buscar_cliente", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ cedula }),
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    alert(data.error);
+                } else if (data.existe) {
+                    document.getElementById("message").innerHTML = `
+                        <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+                            Cliente encontrado: ${data.cliente.nombre} ${data.cliente.apellido}
+                        </div>
+                    `;
+                } else {
+                    document.getElementById("formularioRegistro").classList.remove("hidden");
+                    document.getElementById("cedulaRegistro").value = cedula;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Función para registrar cliente
+        async function registrarCliente() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const cedula = document.getElementById('cedulaRegistro').value;
+
+            try {
+                const response = await fetch('/registrar_cliente', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nombre, apellido, cedula })
+                });
+                
+                const data = await response.json();
+                
+                if (data.mensaje === "Cliente registrado exitosamente") {
+                    // Agregar nuevo cliente a la tabla
+                    const tbody = document.querySelector('tbody');
+                    const newRow = `
+                        <tr class="hover:bg-purple-50 dark:hover:bg-gray-700 transition-colors">
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">${nombre}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">${apellido}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">${cedula}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Activo</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <!-- Botones de acciones -->
+                            </td>
+                        </tr>`;
+                    tbody.insertAdjacentHTML('afterbegin', newRow);
+                    
+                    // Limpiar formulario
+                    document.querySelectorAll('input').forEach(input => input.value = '');
+                } else {
+                    alert('Error: ' + data.mensaje);
+                }
+            } catch (error) {
+                alert('Error de conexión: ' + error.message);
+            }
+        }
+        
+        async function editarCliente(id) {
+            try {
+                const response = await fetch(`/clientes/${id}`);
+                if (!response.ok) throw new Error('Error al cargar datos');
+                
+                const cliente = await response.json();
+                
+                // Actualizar campos del modal
+                document.getElementById('editId').value = id;
+                document.getElementById('editNombre').value = cliente.nombre;
+                document.getElementById('editApellido').value = cliente.apellido;
+                document.getElementById('editCedula').value = cliente.cedula;
+                document.getElementById('editActivo').checked = cliente.activo === 1;
+                
+                // Mostrar modal
+                document.getElementById('editModal').classList.remove('hidden');
+                
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+        
+        // Función para guardar cambios
+        async function guardarEdicion() {
+            const id = document.getElementById('editId').value;
+            const data = {
+                nombre: document.getElementById('editNombre').value,
+                apellido: document.getElementById('editApellido').value,
+                cedula: document.getElementById('editCedula').value,
+                activo: document.getElementById('editActivo').checked ? 1 : 0
+            };
+        
+            try {
+                const response = await fetch(`/editar_cliente/${id}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) throw new Error('Error al guardar');
+                
+                // Actualizar la tabla sin recargar
+                const row = document.querySelector(`tr[data-id="${id}"]`);
+                if (row) {
+                    row.querySelector('td:nth-child(1)').textContent = data.nombre;
+                    row.querySelector('td:nth-child(2)').textContent = data.apellido;
+                    row.querySelector('td:nth-child(3)').textContent = data.cedula;
+                    const estadoSpan = row.querySelector('.estado-cliente');
+                    estadoSpan.textContent = data.activo ? 'Activo' : 'Inactivo';
+                    estadoSpan.className = data.activo 
+                        ? 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800' 
+                        : 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800';
+                }
+                
+                // Ocultar modal
+                document.getElementById('editModal').classList.add('hidden');
+                
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        async function eliminarCliente(id) {
+            if (confirm('¿Está seguro de desactivar este cliente?')) {
+                try {
+                    const response = await fetch(`/eliminar_cliente/${id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    const data = await response.json();
+                    if (data.success) {
+                        // Actualizar la fila específica
+                        const row = document.querySelector(`tr[data-id="${id}"]`);
+                        if (row) {
+                            // Actualizar estado
+                            const estadoSpan = row.querySelector('.estado-cliente');
+                            estadoSpan.className = 'px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 dark:bg-opacity-20';
+                            estadoSpan.textContent = 'Inactivo';
+                            
+                            // Cambiar botón de eliminar a reactivar
+                            const botonEliminar = row.querySelector('.boton-eliminar');
+                            botonEliminar.innerHTML = `
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            `;
+                            botonEliminar.onclick = () => reactivarCliente(id);
+                            botonEliminar.classList.replace('text-red-600', 'text-green-600');
+                        }
+                    }
+                } catch (error) {
+                    alert('Error al desactivar: ' + error.message);
+                }
+            }
+        }
+        
+        // Función para reactivar
+        async function reactivarCliente(id) {
+            try {
+                const response = await fetch(`/reactivar_cliente/${id}`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    const row = document.querySelector(`tr[data-id="${id}"]`);
+                    if (row) {
+                        const estadoSpan = row.querySelector('.estado-cliente');
+                        estadoSpan.className = 'px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 dark:bg-opacity-20';
+                        estadoSpan.textContent = 'Activo';
+                        
+                        const boton = row.querySelector('.boton-eliminar');
+                        boton.innerHTML = `<!-- SVG de eliminar -->`;
+                        boton.onclick = () => eliminarCliente(id);
+                        boton.classList.replace('text-green-600', 'text-red-600');
+                    }
+                }
+            } catch (error) {
+                alert('Error reactivando cliente: ' + error.message);
+            }
+        }
+
+        // Función para abrir el modal y cargar los datos del producto
+        function editarStock(id, stock) {
+            document.getElementById('productoId').value = id;
+            document.getElementById('nuevoStock').value = stock;
+            document.getElementById('modalEditarStock').classList.remove('hidden');
+        }
+    
+        // Función para cerrar el modal
+        function cerrarModal() {
+            document.getElementById('modalEditarStock').classList.add('hidden');
+        }
+    
+        // Enviar el formulario de edición
+        document.getElementById('formEditarStock').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+    
+            fetch('/editar_stock', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Stock actualizado correctamente.');
+                    location.reload(); // Recargar la página para ver los cambios
+                } else {
+                    alert('Error al actualizar el stock: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+        
+
+
+        
+        
+        // Función para cerrar sesión
+        function logout() {
+            window.location.href = "/logout";
+        }
+    </script>
+    
+</body>
+
+</html>
