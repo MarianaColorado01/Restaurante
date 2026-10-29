@@ -1,18 +1,19 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 from functools import wraps
+import os
 import hashlib
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta'
+app.secret_key = os.environ.get('SECRET_KEY', 'cambia_esta_clave')
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 
 # Config MySQL
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'mari'
-app.config['MYSQL_PASSWORD'] = 'Lizet01*'
-app.config['MYSQL_DB'] = 'restaurante'
+app.config['MYSQL_HOST'] = os.environ.get('MYSQL_HOST', 'localhost')
+app.config['MYSQL_USER'] = os.environ.get('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.environ.get('MYSQL_PASSWORD', '')
+app.config['MYSQL_DB'] = os.environ.get('MYSQL_DB', 'restaurante')
 mysql = MySQL(app)
 
 def encriptar_contraseña(contraseña):
